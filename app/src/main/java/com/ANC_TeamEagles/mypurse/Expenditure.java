@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 
 
 public class Expenditure extends AppCompatActivity {
-
+    public ImageButton back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

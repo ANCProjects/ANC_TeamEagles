@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 public class Summary extends AppCompatActivity {
     private ViewPager viewPager;
     private SectionPagerAdapter SectionPagerAdapter;
+    public ImageButton back;0
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

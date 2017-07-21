@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 
 
 public class Income extends AppCompatActivity {
+    public ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
