@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 public class Summary extends AppCompatActivity {
     private ViewPager viewPager;
     private SectionPagerAdapter SectionPagerAdapter;
-    public ImageButton back;0
+    public ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,7 @@ public class Summary extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Summary.this, MainActivity.class );
-                startActivity(i);
+                finish();
             }
         });
 

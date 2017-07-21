@@ -22,8 +22,7 @@ public class Expenditure extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Expenditure.this, MainActivity.class );
-                startActivity(i);
+                finish();
             }
         });
 

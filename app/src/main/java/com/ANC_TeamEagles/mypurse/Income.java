@@ -23,8 +23,7 @@ public class Income extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Income.this, MainActivity.class );
-                startActivity(i);
+                finish();
             }
         });
 
