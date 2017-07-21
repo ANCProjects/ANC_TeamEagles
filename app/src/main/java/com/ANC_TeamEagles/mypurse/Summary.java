@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 
 public class Summary extends AppCompatActivity {
@@ -19,6 +21,15 @@ public class Summary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
+
+        back = (ImageButton) findViewById(R.id.back_arrow);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Summary.this, MainActivity.class );
+                startActivity(i);
+            }
+        });
 
 
         SectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());

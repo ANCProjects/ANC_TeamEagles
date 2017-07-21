@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 
 public class Expenditure extends AppCompatActivity {
@@ -15,6 +17,15 @@ public class Expenditure extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenditure);
+
+        back = (ImageButton) findViewById(R.id.back_arrow);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Expenditure.this, MainActivity.class );
+                startActivity(i);
+            }
+        });
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();

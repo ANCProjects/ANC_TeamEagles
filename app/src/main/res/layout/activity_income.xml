@@ -25,6 +25,22 @@
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp">
+                    <ImageButton
+                        android:id="@+id/back_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_back"
+                        android:tint="@color/colorWhite"
+                        android:background="@color/colorPrimary"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
             </android.support.design.widget.AppBarLayout>
 
         </LinearLayout>
