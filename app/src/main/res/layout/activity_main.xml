@@ -53,20 +53,31 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_naira"
+                        android:id="@+id/currency"
+                        android:layout_marginRight="26dp"
+                        android:layout_marginTop="5dp"
+
+                        />
 
                     <TextView
                         android:id="@+id/homeStartBal"
+                        android:layout_toRightOf="@+id/currency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NGN 0.00"
+                        android:text=" 0.00"
                         android:textSize="35dp"
+                        android:layout_centerHorizontal="true"
                         android:textColor="@color/colorWhite"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/homeStartBal"
-                        android:layout_marginLeft="40dp"
+                        android:layout_centerHorizontal="true"
                         android:text="@string/startBal"
                         android:textColor="#ffffff"
                         android:textSize="13sp"

@@ -1,25 +1,24 @@
 package com.ANC_TeamEagles.mypurse;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton addButton ;
-    TextView startBal;
-
-
-
-
+    TextView addBal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,15 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.myhometoolbar);
         setSupportActionBar(toolbar);
+        
 
-        startBal = (TextView) findViewById(R.id.homeStartBal);
+        addBal = (TextView) findViewById(R.id.homeStartBal);
 
       addButton = (FloatingActionButton) findViewById(R.id.fab);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Add start Balance", Toast.LENGTH_LONG).show();
-                startBal.setText("N100,000");
+                Dialog();
+
             }
         });
 
@@ -90,5 +90,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    final public void Dialog(){
+        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        final View inflator = inflater.inflate(R.layout.add_startbalance_alert_dialog, null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        alert.setView(inflator);
+
+        final EditText startBal = (EditText) inflator.findViewById(R.id.add_start_bal);
+
+
+        alert.setPositiveButton(R.string.addBalance, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                String balance = startBal.getText().toString();
+                addBal.setText(" "+ balance);
+            }
+        });
+
+        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        alert.show();
+
+    }
 
 }
