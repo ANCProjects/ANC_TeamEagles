@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
+
     FloatingActionButton addButton ;
     TextView addBal;
     @Override
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         alert.setView(inflator);
 
         final EditText startBal = (EditText) inflator.findViewById(R.id.add_start_bal);
+        startBal.addTextChangedListener(new NumberTextWatcherForThousand(startBal));
 
 
         alert.setPositiveButton(R.string.addBalance, new DialogInterface.OnClickListener() {
