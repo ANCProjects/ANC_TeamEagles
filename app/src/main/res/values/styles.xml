@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
+        <item name="actionMenuTextColor">@color/colorBlue</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">21sp</item>
+    </style>
+
 </resources>

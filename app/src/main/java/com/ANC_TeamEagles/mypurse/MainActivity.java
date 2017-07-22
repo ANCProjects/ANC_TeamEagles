@@ -4,11 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
+    FloatingActionButton addButton ;
+    TextView startBal;
+
 
 
 
@@ -18,6 +26,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.myhometoolbar);
+        setSupportActionBar(toolbar);
+
+        startBal = (TextView) findViewById(R.id.homeStartBal);
+
+      addButton = (FloatingActionButton) findViewById(R.id.fab);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Add start Balance", Toast.LENGTH_LONG).show();
+                startBal.setText("N100,000");
+            }
+        });
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
@@ -48,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+
     }
 
     @Override

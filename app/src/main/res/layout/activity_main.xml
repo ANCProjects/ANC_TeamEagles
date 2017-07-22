@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.ANC_TeamEagles.mypurse.MainActivity">
 
 
@@ -18,14 +19,26 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:orientation="vertical">
-
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+
                 >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/myhometoolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:titleTextColor="@android:color/white"
+                android:theme="@style/ToolbarTheme"
+                app:titleTextAppearance="@style/Toolbar.TitleText"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                />
             </android.support.design.widget.AppBarLayout>
+
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -41,20 +54,19 @@
                     android:layout_gravity="center_horizontal">
 
 
-                    <EditText
+                    <TextView
                         android:id="@+id/homeStartBal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ems="5"
-                        android:inputType="numberSigned" />
+                        android:text="NGN 0.00"
+                        android:textSize="35dp"
+                        android:textColor="@color/colorWhite"/>
 
                     <TextView
-                        android:id="@+id/start_bal_descp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/homeStartBal"
-                        android:layout_marginLeft="18dp"
-                        android:fontFamily="Amaranth"
+                        android:layout_marginLeft="40dp"
                         android:text="@string/startBal"
                         android:textColor="#ffffff"
                         android:textSize="13sp"
@@ -73,75 +85,16 @@
             android:layout_above="@+id/relLayoutBotbar"
             android:layout_below="@+id/relLayoutTopbar">
 
-            <LinearLayout
-                android:id="@+id/linear2"
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_notes" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_weight="2"
-                    android:fontFamily="serif"
-                    android:text="Income"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/income_amt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_weight="4"
-                    android:ems="10"
-                    android:inputType="number"
-                    tools:text="NGN 20,000" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="18dp"
-                    android:layout_weight="2"
-                    android:background="#4D8157"
-                    android:text="Add"
-                    android:textColor="@color/colorWhite" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/linear2"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
-
-                <TextView
-                    android:id="@+id/desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Description" />
-
-                <EditText
-                    android:id="@+id/descp_box"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:ems="30"
-                    android:inputType="textMultiLine" />
-            </LinearLayout>
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
+                android:elevation="5dp"
+                android:src="@drawable/ic_add"/>
 
 
         </RelativeLayout>
