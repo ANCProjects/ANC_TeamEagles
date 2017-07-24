@@ -7,6 +7,13 @@
         android:id="@+id/allItems"
         android:icon="@drawable/ic_menu"
         app:showAsAction="always"
+        android:orderInCategory="2">
+
+    </item>
+    <item
+        android:title="share"
+        android:id="@+id/share"
+        app:showAsAction="ifRoom"
         android:orderInCategory="1">
 
     </item>

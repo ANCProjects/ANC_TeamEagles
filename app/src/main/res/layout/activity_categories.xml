@@ -11,7 +11,6 @@
         android:id="@+id/relLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <LinearLayout
             android:id="@+id/relLayoutTopbar"
             android:layout_width="match_parent"
@@ -39,11 +38,20 @@
                         android:background="@color/colorPrimary"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category List"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_centerHorizontal="true"/>
 
                 </RelativeLayout>
             </android.support.design.widget.AppBarLayout>
 
         </LinearLayout>
+
 
 
         <RelativeLayout
@@ -52,35 +60,25 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/relLayoutBotbar"
             android:layout_below="@+id/relLayoutTopbar"
-            android:padding="16dp">
+            >
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Income Page"
-               android:textSize="20sp"/>
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/relLayoutBotbar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true">
-
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/bottomNavView_Bar"
-                android:layout_width="match_parent"
+            <ExpandableListView
+                android:id="@+id/expandableListView"
                 android:layout_height="match_parent"
-                android:background="@drawable/bottom_bar_background"
-                app:menu="@menu/main">
+                android:layout_width="match_parent"
+                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                android:divider="@drawable/list_divider"
+                android:childDivider="@drawable/list_divider"
+                android:groupIndicator="@null"
+                android:dividerHeight="0.5dp"
+                />
 
 
-            </android.support.design.widget.BottomNavigationView>
 
         </RelativeLayout>
+
+
+
 
 
     </RelativeLayout>

@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".Income" />
         <activity android:name=".Expenditure" />
-        <activity android:name=".Summary"></activity>
+        <activity android:name=".Summary" />
+        <activity android:name=".Categories"></activity>
     </application>
 
 </manifest>
