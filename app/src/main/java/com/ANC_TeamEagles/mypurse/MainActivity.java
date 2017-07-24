@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button test = (Button) findViewById(R.id.test);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Categories.class);
+                startActivity(i);
+            }
+        });
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.myhometoolbar);
         setSupportActionBar(toolbar);
@@ -32,12 +43,18 @@ public class MainActivity extends AppCompatActivity {
 
         addBal = (TextView) findViewById(R.id.homeStartBal);
 
+        addBal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog();
+            }
+        });
+
       addButton = (FloatingActionButton) findViewById(R.id.fab);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dialog();
-
             }
         });
 

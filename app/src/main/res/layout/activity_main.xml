@@ -94,7 +94,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/relLayoutBotbar"
-            android:layout_below="@+id/relLayoutTopbar">
+            android:layout_below="@+id/relLayoutTopbar"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/add_balance_call"
+                android:layout_height="wrap_content"
+                android:text="Tap the Plus icon to enter a start Balance"
+                android:textSize="20sp"/>
+
+                <Button
+                    android:layout_width="134dp"
+                    android:layout_height="30dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="Choose Category"
+                    android:id="@+id/test"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/colorPrimary"
+                    android:layout_below="@+id/add_balance_call"/>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
@@ -102,8 +120,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="16dp"
-                android:layout_marginRight="16dp"
                 android:elevation="5dp"
                 android:src="@drawable/ic_add"/>
 
