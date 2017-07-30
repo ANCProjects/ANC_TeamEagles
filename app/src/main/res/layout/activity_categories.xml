@@ -60,6 +60,8 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/relLayoutBotbar"
             android:layout_below="@+id/relLayoutTopbar"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
             >
 
             <ExpandableListView
@@ -72,6 +74,14 @@
                 android:groupIndicator="@null"
                 android:dividerHeight="0.5dp"
                 />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/category_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:elevation="3dp"
+                android:src="@drawable/ic_add"/>
 
 
 

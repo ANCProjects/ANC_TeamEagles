@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.ANC_TeamEagles.mypurse.MainActivity">
+    tools:context="com.ANC_TeamEagles.mypurse.MainActivity"
+    android:id="@+id/activity_main">
 
 
     <RelativeLayout
@@ -95,33 +96,32 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/relLayoutBotbar"
             android:layout_below="@+id/relLayoutTopbar"
-            android:padding="16dp">
+            >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:id="@+id/add_balance_call"
-                android:layout_height="wrap_content"
-                android:text="Tap the Plus icon to enter a start Balance"
-                android:textSize="20sp"/>
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/body"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
 
-                <Button
-                    android:layout_width="134dp"
-                    android:layout_height="30dp"
-                    android:textColor="@color/colorWhite"
-                    android:text="Choose Category"
-                    android:id="@+id/test"
-                    android:layout_alignParentRight="true"
-                    android:background="@color/colorPrimary"
-                    android:layout_below="@+id/add_balance_call"/>
+
+
+            </android.support.v4.view.ViewPager>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:elevation="5dp"
-                android:src="@drawable/ic_add"/>
+                android:src="@drawable/ic_add"
+                app:backgroundTint="#26a69a"/>
+
+
 
 
         </RelativeLayout>
@@ -138,7 +138,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bottom_bar_background"
-                app:menu="@menu/main">
+                app:menu="@menu/main"
+                app:itemIconTint="@drawable/bottom_navigation_color_selector"
+                app:itemTextColor="@drawable/bottom_navigation_color_selector"
+                >
 
 
             </android.support.design.widget.BottomNavigationView>

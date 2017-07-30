@@ -7,14 +7,21 @@
         android:title="Income"
         ></item>
     <item
-        android:id="@+id/summary"
-        android:icon="@drawable/ic_summary"
-        android:title="Summary"
+        android:id="@+id/overview"
+        android:icon="@drawable/ic_overview"
+        android:title="Overview"
         ></item>
+    <item
+        android:id="@+id/charts"
+        android:icon="@drawable/ic_charts"
+        android:title="Charts"
+        ></item>
+
     <item
         android:id="@+id/expenditure"
         android:icon="@drawable/ic_expenditure"
         android:title="Expenditure"
         ></item>
+
 
 </menu>

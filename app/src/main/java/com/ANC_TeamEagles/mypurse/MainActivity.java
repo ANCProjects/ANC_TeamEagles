@@ -1,45 +1,45 @@
 package com.ANC_TeamEagles.mypurse;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    private ViewPager viewPager;
+    private SectionPagerAdapter SectionPagerAdapter;
     FloatingActionButton addButton ;
     TextView addBal;
+    public BottomNavigationViewHelper helper;
+    MenuItem menuItem;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Button test = (Button) findViewById(R.id.test);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Categories.class);
-                startActivity(i);
-            }
-        });
+        setContentView(R.layout.drawerlayout);
 
 
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.myhometoolbar);
-        setSupportActionBar(toolbar);
-        
+        navigationDrawer();
 
         addBal = (TextView) findViewById(R.id.homeStartBal);
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-      addButton = (FloatingActionButton) findViewById(R.id.fab);
+        addButton = (FloatingActionButton) findViewById(R.id.fab);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,40 +58,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem =  menu.getItem(0);
-        menuItem.setChecked(true);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()){
-
-                    case R.id.income:
-                        Intent intent1 = new Intent(MainActivity.this,Income.class);
-                        startActivity(intent1);
-                        break;
-                    case R.id.summary:
-                        Intent intent2 = new Intent(MainActivity.this,Summary.class);
-                        startActivity(intent2);
-                        break;
-                    case R.id.expenditure:
-                        Intent intent3 = new Intent(MainActivity.this,Expenditure.class);
-                        startActivity(intent3);
-                        break;
-
-                }
-                return false;
-            }
-        });
-
-
+        SectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.body);
+        setupViewPager(viewPager);
+         setupBottomView();
 
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
@@ -101,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemThatWasClickedId = item.getItemId();
-        if (itemThatWasClickedId == R.id.allItems) {
+        if (itemThatWasClickedId == R.id.share) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -135,5 +117,115 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
 
     }
+    private void setupViewPager(ViewPager viewpager) {
 
+        SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new IncomeFragment());
+        adapter.addFragment(new OverviewFragment());
+        adapter.addFragment(new ChartsFragment());
+        adapter.addFragment(new ExpenditureFragment());
+        viewPager.setAdapter(adapter);
+    }
+
+  public void setupBottomView(){
+
+      final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+      helper.removeShiftMode(bottomNavigationView);
+      bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+              switch (item.getItemId()) {
+
+                  case R.id.income: {
+                      viewPager.setCurrentItem(0);
+                      break;
+                  }
+                  case R.id.overview: {
+                      viewPager.setCurrentItem(1);
+                      break;
+                  }
+                  case R.id.charts: {
+                      viewPager.setCurrentItem(2);
+                      break;
+                  }
+                  case R.id.expenditure: {
+                      viewPager.setCurrentItem(3);
+                      break;
+
+                  }
+
+
+              }
+              return false;
+          }
+      });
+      viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+          @Override
+          public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+          }
+
+          @Override
+          public void onPageSelected(int position) {
+              if (menuItem != null) {
+                  menuItem.setChecked(false);
+              }
+              else
+              {
+                  bottomNavigationView.getMenu().getItem(0).setChecked(false);
+
+              }
+              Log.d("page", "onPageSelected: "+position);
+              bottomNavigationView.getMenu().getItem(position).setChecked(true);
+              menuItem = bottomNavigationView.getMenu().getItem(position);
+
+          }
+
+          @Override
+          public void onPageScrollStateChanged(int state) {
+
+          }
+      });
+
+  }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+    private void navigationDrawer(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.myhometoolbar);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+    }
 }
