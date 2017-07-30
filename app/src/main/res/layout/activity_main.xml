@@ -22,10 +22,8 @@
             android:orientation="vertical">
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-
-                >
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_horizontal_margin">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/myhometoolbar"
@@ -42,11 +40,7 @@
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-
-                android:layout_weight="1"
-
-                >
+                android:layout_height="70dp">
 
                 <RelativeLayout
                     android:id="@+id/topContent"
@@ -60,6 +54,7 @@
                         android:src="@drawable/ic_naira"
                         android:id="@+id/currency"
                         android:layout_marginRight="26dp"
+                        android:layout_marginEnd="26dp"
                         android:layout_marginTop="5dp"
 
                         />
@@ -89,20 +84,12 @@
             </android.support.design.widget.AppBarLayout>
         </LinearLayout>
 
-
-        <RelativeLayout
-            android:id="@+id/relLayoutMiddle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/relLayoutBotbar"
-            android:layout_below="@+id/relLayoutTopbar"
-            >
-
             <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/body"
-                android:layout_alignParentTop="true"
+                android:layout_above="@+id/relLayoutBotbar"
+                android:layout_below="@+id/relLayoutTopbar"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true">
 
@@ -110,21 +97,20 @@
 
             </android.support.v4.view.ViewPager>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab"
+            <com.joaquimley.faboptions.FabOptions
+                android:id="@+id/fab_transaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                app:button_menu="@menu/menu_fab"
+                android:layout_marginTop="-50dp"
+                app:fab_color="?attr/colorAccent"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:elevation="5dp"
+                android:layout_below="@+id/relLayoutTopbar"
                 android:src="@drawable/ic_add"
                 app:backgroundTint="#26a69a"/>
 
 
-
-
-        </RelativeLayout>
 
 
         <RelativeLayout

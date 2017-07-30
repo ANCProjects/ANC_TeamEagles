@@ -4,17 +4,14 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,12 +19,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
+
+import com.joaquimley.faboptions.FabOptions;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ViewPager viewPager;
     private SectionPagerAdapter SectionPagerAdapter;
-    FloatingActionButton addButton ;
+
+    @BindView(R.id.fab_transaction)
+    FabOptions transactionsFab;
+
     TextView addBal;
     public BottomNavigationViewHelper helper;
     MenuItem menuItem;
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawerlayout);
-
+        ButterKnife.bind(this);
 
         navigationDrawer();
 
@@ -50,13 +55,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        addButton = (FloatingActionButton) findViewById(R.id.fab);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog();
-            }
-        });
+
+//        transactionsFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Dialog();
+//            }
+//        });
 
         SectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.body);
@@ -90,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @OnClick({R.id.fab_add, R.id.fab_remove})
     final public void Dialog(){
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         final View inflator = inflater.inflate(R.layout.add_startbalance_alert_dialog, null);

@@ -25,15 +25,28 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    //graph
+//    graph
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
+//    firebase
     compile 'com.google.firebase:firebase-database:10.0.1'
     compile 'com.google.firebase:firebase-auth:10.0.1'
+
+//    tests
     testCompile 'junit:junit:4.12'
+
+//    fabMenu
+    compile 'com.github.joaquimley:faboptions:1.1.2'
+
+    compile 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+
+
 }
 
 

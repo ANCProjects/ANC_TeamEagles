@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/fab_add"
+          android:icon="@drawable/ic_add_circle_black_24dp"
+          android:title="income" />
+
+    <item android:id="@+id/fab_remove"
+          android:icon="@drawable/ic_remove_circle_black_24dp"
+          android:title="expenditure" />
+
+</menu>
