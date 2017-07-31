@@ -59,6 +59,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "103300585818-kp05vuee5vmg180b41vgr68f1uclch26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ANC_TeamEagles.MyPurse",
+            "certificate_hash": "b735c8e078dd114a84b491bc22b84fcecf9e94f2"
+          }
+        },
+        {
           "client_id": "103300585818-pegbg75auu9pleb05hsmg00ign2ql1aa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
