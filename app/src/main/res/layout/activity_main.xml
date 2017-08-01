@@ -108,7 +108,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/relLayoutTopbar"
                 android:src="@drawable/ic_add"
-                app:backgroundTint="#26a69a"/>
+                />
 
 
 

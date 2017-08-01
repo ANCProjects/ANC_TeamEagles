@@ -28,7 +28,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ViewPager viewPager;
-    private SectionPagerAdapter SectionPagerAdapter;
+    private SectionPagerAdapter sectionPagerAdapter;
 
     @BindView(R.id.fab_transaction)
     FabOptions transactionsFab;
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            }
 //        });
 
-        SectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
+        sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.body);
         setupViewPager(viewPager);
          setupBottomView();
