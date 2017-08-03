@@ -1,7 +1,6 @@
 package com.ANC_TeamEagles.mypurse;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -43,23 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawerlayout);
-
-        findViewById(R.id.btn_play_again).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // We normally won't show the welcome slider again in real app
-                // but this is for testing
-                PrefManager prefManager = new PrefManager(getApplicationContext());
-
-                // make first time launch TRUE
-                prefManager.setFirstTimeLaunch(true);
-
-                startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
-                finish();
-            }
-        });
-
-
         ButterKnife.bind(this);
 
         navigationDrawer();

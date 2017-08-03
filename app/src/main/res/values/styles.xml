@@ -17,4 +17,11 @@
         <item name="android:textSize">21sp</item>
     </style>
 
+    <style name="LoginTheme" parent="FirebaseUI">
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

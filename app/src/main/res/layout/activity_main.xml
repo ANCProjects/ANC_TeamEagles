@@ -23,7 +23,7 @@
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/topbar_padding">
+                android:padding="@dimen/activity_horizontal_margin">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/myhometoolbar"
@@ -109,13 +109,6 @@
                 android:layout_below="@+id/relLayoutTopbar"
                 android:src="@drawable/ic_add"
                 />
-        <Button
-            android:id="@+id/btn_play_again"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/play_again"
-            android:layout_below="@+id/relLayoutTopbar"/>
 
 
 
