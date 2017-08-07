@@ -9,11 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".WelcomeActivity">
+
+        </activity>
         <activity android:name=".MainActivity">
 
         </activity>
         <activity android:name=".Categories" />
         <activity android:name="com.ANC_TeamEagles.mypurse.LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
