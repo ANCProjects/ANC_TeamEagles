@@ -15,14 +15,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private static final int rcSignIn = 100;
-    Intent loginSuccessIntent = new Intent(LoginActivity.this, MainActivity.class) ;
+    private Intent loginSuccessIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loginSuccessIntent = new Intent(LoginActivity.this, MainActivity.class);
         auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser() != null){
+
             // useralredy signed in
             startActivity(loginSuccessIntent);
             finish();

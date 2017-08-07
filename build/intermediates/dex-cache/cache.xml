@@ -3,291 +3,120 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\f8fb9af4fbd68ba596a0680e7f44bbb19db7e339\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="8bdf5cd702d3d860cd85783a776c26605f557882">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4e7bc92b04053da201489b6379796af2c869e704\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\811aa95dd760893fd0575e42ab6a5ebf0aa5ec8b\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="1108575c7dc7b7f5b378b3290ac90de81a9b8830">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c6dac66f73b9b5514dcd3bf4e38e480ed0bbeb4e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.0.2\f8d87f15b94b8d74e7ccf61d7eedb558811cdb30\converter-gson-2.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="f8d87f15b94b8d74e7ccf61d7eedb558811cdb30">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\converter-gson-2.0.2_771339f5d6ed9b218a076ce5e367d06d5bdc6e5b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\bolts-tasks-1.4.0_7b190c6e870466e8c9c3789d29df7e0bbf7028d9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\0005c74fedf34a31badc4b458e9506a475257e75\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="23c7c34bfb3cdc0599d49e581486b179bc6b2eee">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5e668d100d25232c5ff62c36acbb9c908b09f256\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\85a360c5498f6ec4538befd583feb116c04308e2\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="312bc30848df24f8de992863408cc46027e29d61">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_32bb6a23775c9a18f861b4631ddb173304ee05c2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\6ba579350ee681de8f3cb787c90ce285625fed43\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="0b7d39c161cecdb6c2b52a1cdc71faf0ffd4626e">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ef0bf2d168b843ea9d3509bf65269265ca7fea2b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\5a3cac258d5c27f65fdf51fcd8032278b99e367f\output\jars\classes.jar"
+        jar="/home/nezspencer/.android/build-cache/1a11a9ac2332e62905fcfca81e4eb0e479eb3e12/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="a18773c279bde7e49e09f621aea613685c108c7f">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_afcf94803854e06f8019be4fd1be883333b6b321\classes.dex" />
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_07e5c3db304e3ce0a3f710ab5335f6b49d01f5b0/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.6.0_8b18662fdbf118ca3963612e705307ae8e430ae7\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\ef70457deaf7da33dbb769c58bf052ec0e547ebb\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5ac49e5d5aea8772c8018ce2888145f04c5fe7ca">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_df2c12fa3244efe0404592321ae1d7f79900ef18\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\f5271d4e5ebe2622fde166e2b78a985d93fb460e\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2a3224154b36aa5bb941f20d1625ba1fb20aa3a7">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3bafe7589e796e9153376e3c577022df7dfe03af\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\46b6a1136da9e4351734c8f2e3d0a28c9e8944b0\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a319fd4d548ba4cc9511561d37109ba922bfbf6a">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_83cf20fc0e53bd9dcbdfae08204fd4b2ee636b98\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-applinks\1.4.0\8ad21bf21784dacce5f2043afb97218cc377e835\bolts-applinks-1.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\bolts-applinks-1.4.0_076d67b804327eb6fe1c39a157576084b7a1dd1b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.github.PhilJay\MPAndroidChart\v3.0.2\5d4eb08a326bdbd7fbbddc769666898c9936b282\MPAndroidChart-v3.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5d4eb08a326bdbd7fbbddc769666898c9936b282">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\MPAndroidChart-v3.0.2_9a3acd2c607fc07788c9fa239cf5824df884a64a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.2.0\f7873a2ebde246a45c2a8d6f3247108b4c88a879\okhttp-3.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-3.2.0_51950d571d9d9c1c8820911be8656b471487300f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\660224237a42b08a43acd9b509effab6fd11b6be\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2b7e936ca11ae0588600beb7388553bda26d7e66">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_bc768b46b2505b7736f4915be2984625a658de33\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\7664769d9f81386fda055e7def8f6017065dc509\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b0b0f4f99cf68e748dd123ad553738e4284d4749">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a1d6dd38dc1737117777be502e9df9f988080b85\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\e68ce125f64fbaf89f19e28c1caac90f6ab969c4\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e2185aff89caeb337b1ffc36d5e525d8318e7cfe">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_664cf93787b31bf5678620d5b1e033d99d81942b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.7.0\2637055420a2da406e3ea9920c2ff4aafd38c970\butterknife-annotations-8.7.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2637055420a2da406e3ea9920c2ff4aafd38c970">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-annotations-8.7.0_aa5398487443a8d41932110e1680da945661a10d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\1a17c412d1db77314e524a1da9ac307b665233ba\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="783127c8b1d23b84cccc3dc776ca4637d4aba900">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ad2ba2a9fe470cb9b61567921e6bf1d995f6a164\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\e462bb94f795fb79c8c15631dd9ef3f5731324b0\output\jars\classes.jar"
+        jar="/home/nezspencer/.android/build-cache/1aeb253163ceedfabf5d887c6409b37a7ccad8b2/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="e96c6974cf924e7ee3b230e6847d5731423388c9">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_292a0238f34d97506532713b7c68ae60d02c0dab\classes.dex" />
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0a9779c9d77d347ee30c0ffad686e20e93a0f70c/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\667fafa6edd12d02bbc1f4261c5acc6b8289cdc5\output\jars\classes.jar"
+        jar="/home/nezspencer/.android/build-cache/145cdeebbaf17e322a06cb14cb5b06c5b7c79e0c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b0b0f4f99cf68e748dd123ad553738e4284d4749">
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6c4a09a1a8c57bb6cf9420a2587303fb62a0f3b3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/nezspencer/.android/build-cache/4e7eb02d47070ae2ff7f30d234435683192c3576/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="e2b9f0c5025fb0640ef092b1ca322bf4a4992e1c">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d67672ed1c7162e3fd118bc6ec0c8256ba93a8e8\classes.dex" />
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ca3a78e58cbc385fb319d26e55c88a66b33db96f/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\0cbe7c2f731f3028b2578098b42b2332f6b0f325\output\jars\classes.jar"
+        jar="/home/nezspencer/.android/build-cache/d858eca5c00c6aa23f39ab46340ff284c44bc53b/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="cf8c0b6ec17f059cf61ecd101296e16c38562196">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_2fe2bd03ea1fa23d017e66cda9bbdadeb6ff1b84\classes.dex" />
+        sha1="5ac49e5d5aea8772c8018ce2888145f04c5fe7ca">
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ea5bad2a8056d4a66d4aef46ae989b17196fb720/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\465c0319c1ccc2afa53639ddac5831a4aca4ae68\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4deb6adbe724b17214ded081b0fbfb109a87077e">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_70f38c55f855791db31b91928cd5ca05761feb29\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\5b87715e91e6184ca737327a67d5aadec2cf102d\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6888a6faad7690088caf4ce55cde09763d7eefd0">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_bff3b6d4f41660083855032f437db599fe0b4847\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.twitter\twitter-text\1.13.0\78415b95ae3184c5926d593feab64bfc0b73b2dd\twitter-text-1.13.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="78415b95ae3184c5926d593feab64bfc0b73b2dd">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\twitter-text-1.13.0_bbab02b7670ff85772de8395a6abcffae0b9f788\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.6.1\b9d63507329a7178e026fc334f87587ee5070ac5\gson-2.6.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b9d63507329a7178e026fc334f87587ee5070ac5">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.6.1_423dd1dce55ea8c0ea105989d34dbe66c40e7923\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.android\build-cache\d84375ffed0e7bf7a940447cdb30001afe4f9c6a\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="54b3601622b4eeaf43f04a8a40cc0ea4c649b6a9">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_599820dd07b2e7bf598677b5ae626f8940467b54\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="18a956b78462ae49a219ca89bb3b059e851b1b33">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ea346fc452f0c37229c4fe17f41f116859fbeedc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_a4830be17a977bc8cfb8f2266a9fcfdf87ec971c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.0.2\43eeae0b9fb087bb3194ba59ab63a38a32fbf3e\retrofit-2.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="043eeae0b9fb087bb3194ba59ab63a38a32fbf3e">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\retrofit-2.0.2_f427b21201cb433339da105fef1548bc1b5b7b98\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="/home/nezspencer/git/myPurse/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\tunde\Desktop\ANC_TeamEagle\ANC_TeamEagles-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_5b4118d3337d12b2ec01dda9453b4108896b3950\classes.dex" />
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_6b052262a3f1e7115190ed19c7e71db2265ac6ef/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/nezspencer/.android/build-cache/83b50d0e69cc6f2425eabab7caf960e2b8f5a04d/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e2185aff89caeb337b1ffc36d5e525d8318e7cfe">
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3fdc7f8e2c3345dd3e01fbe3fa1d3a9b2bbc6ef2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/nezspencer/git/myPurse/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3b0f646903b0715def7642f19c3d9806d7d794a6">
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_d994ea3d129f5acb6714b4f463cb64b60b79e6dc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/nezspencer/.android/build-cache/ceb3f1faa36e189af272141133168a8b414efc20/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cf8c0b6ec17f059cf61ecd101296e16c38562196">
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_53a832004f2e88681f388c2eb79c8ee6b5466506/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/nezspencer/.android/build-cache/741ae4aeee89621d7046c10baa2109642c409f1b/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6b63d873d0f3394ace8b6a7d9aa194816c6253b4">
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_18687ffbaeff350ac8f8baaabb930983a93d0041/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/nezspencer/.android/build-cache/6c2c2e445c7f1180535fa42d105345cd408dfdbd/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="783127c8b1d23b84cccc3dc776ca4637d4aba900">
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_bae1ae8a4099f248c861aa45d9d99e484d2c0c7e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/nezspencer/.android/build-cache/ad73a9bdf39779aca0444fa02433f3e9ff2d6061/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1108575c7dc7b7f5b378b3290ac90de81a9b8830">
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e7113683048472a409b383f78a00a1149ee6a4a8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/nezspencer/.android/build-cache/d02e99bf1658d443faad7540632446a814f23c46/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8bdf5cd702d3d860cd85783a776c26605f557882">
+        <dex dex="/home/nezspencer/git/myPurse/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2b52067891abb508d4493689711239474ac8845b/classes.dex" />
     </item>
 
 </items>
