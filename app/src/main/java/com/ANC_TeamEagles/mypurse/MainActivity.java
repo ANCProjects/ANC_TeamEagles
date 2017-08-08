@@ -1,7 +1,9 @@
 package com.ANC_TeamEagles.mypurse;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -19,7 +21,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ANC_TeamEagles.mypurse.utils.Constants;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.ui.ResultCodes;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.joaquimley.faboptions.FabOptions;
 
 import butterknife.BindView;
@@ -29,6 +40,22 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ViewPager viewPager;
     private SectionPagerAdapter sectionPagerAdapter;
+
+    private DatabaseReference transactionReference;
+    private DatabaseReference userReference;
+    private DatabaseReference monthlyTransactionReference;
+    private DatabaseReference dayTransactionRef;
+
+    private ValueEventListener transactionListener;
+    private ValueEventListener monthlyListener;
+    private ValueEventListener dailyListener;
+
+
+
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private static final int rcSignIn = 100;
+    private Intent loginSuccessIntent;
 
     @BindView(R.id.fab_transaction)
     FabOptions transactionsFab;
@@ -44,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.drawerlayout);
         ButterKnife.bind(this);
 
+
+
         navigationDrawer();
 
         addBal = (TextView) findViewById(R.id.homeStartBal);
@@ -56,18 +85,67 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-//        transactionsFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Dialog();
-//            }
-//        });
 
         sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.body);
         setupViewPager(viewPager);
-         setupBottomView();
+        setupBottomView();
 
+        setupFirebaseAuth();
+
+
+    }
+
+    public void setupFirebaseAuth(){
+        auth = FirebaseAuth.getInstance();
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user == null){
+                    // not signed in
+                    startActivityForResult(AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setProviders(
+                                            AuthUI.EMAIL_PROVIDER,
+                                            AuthUI.GOOGLE_PROVIDER)
+                                    .setTheme(R.style.LoginTheme)
+                                    .setLogo(R.drawable.logo)
+                                    .build(),
+                            rcSignIn);
+                }
+                else {
+                    //logged in
+
+                    attachDatabaseListeners();
+                }
+            }
+        };
+    }
+
+    private void attachDatabaseListeners() {
+        userReference = App.appDatabase.getReference().child(Constants.KEY_EMAIL);
+        transactionReference = userReference.child(Constants.NODE_TRANSACTION);
+        monthlyTransactionReference = userReference.child(Constants.NODE_MONTHLY);
+        dayTransactionRef = userReference.child(Constants.NODE_DAY);
+
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        auth.removeAuthStateListener(authStateListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authStateListener);
     }
 
     @Override
@@ -233,5 +311,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == rcSignIn){
+            handleSignInResponse(resultCode, data);
+            return;
+        }
+    }
+
+
+    @MainThread
+    private void handleSignInResponse(int resultCode, Intent data) {
+        IdpResponse response = IdpResponse.fromResultIntent(data);
+
+        // Successfully signed in
+        if (resultCode == RESULT_OK) {
+            //startActivity(loginSuccessIntent);
+            //finish();
+            return;
+        }
+        // Sign in failed
+        if (resultCode == RESULT_CANCELED) {
+            // User pressed back button
+            Toast.makeText(getApplicationContext(), "sign_in_cancelled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // No internet connection
+        if (resultCode == ResultCodes.RESULT_NO_NETWORK) {
+            Toast.makeText(getApplicationContext(), "no_internet_connection", Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 }

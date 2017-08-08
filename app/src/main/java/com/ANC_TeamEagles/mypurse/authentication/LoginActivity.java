@@ -1,4 +1,4 @@
-package com.ANC_TeamEagles.mypurse;
+package com.ANC_TeamEagles.mypurse.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.ANC_TeamEagles.mypurse.MainActivity;
+import com.ANC_TeamEagles.mypurse.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.ui.ResultCodes;
