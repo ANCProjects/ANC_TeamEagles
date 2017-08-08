@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.joaquimley.faboptions.FabOptions;
@@ -28,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    private static final int rcSignIn = 100;
     private ViewPager viewPager;
     private SectionPagerAdapter sectionPagerAdapter;
 
@@ -214,6 +216,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.signout) {
             AuthUI.getInstance().signOut(this);
+            Toast.makeText(getApplicationContext(), "Succesfully signed out", Toast.LENGTH_SHORT).show();
+            startActivityForResult(AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setIsSmartLockEnabled(false)
+                            .setProviders(
+                                    AuthUI.EMAIL_PROVIDER,
+                                    AuthUI.GOOGLE_PROVIDER)
+                            .setTheme(R.style.LoginTheme)
+                            .setLogo(R.drawable.logo)
+                            .build(),
+                    rcSignIn);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
