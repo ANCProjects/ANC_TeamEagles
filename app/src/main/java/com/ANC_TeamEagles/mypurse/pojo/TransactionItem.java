@@ -26,14 +26,6 @@ public class TransactionItem {
         this.isIncome = isIncome;
     }
 
-    public TransactionItem(double amount, String description, String day_month, double totalSoFar) {
-        this.amount = amount;
-        this.description = description;
-        this.day_month = day_month;
-        this.totalSoFar = totalSoFar;
-
-    }
-
     public double getAmount() {
         return amount;
     }
@@ -50,7 +42,7 @@ public class TransactionItem {
         return totalSoFar;
     }
 
-    public boolean isIncome() {
+    public boolean isIsIncome() {
         return isIncome;
     }
 }

@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ANC_TeamEagles.mypurse.MainActivity;
-import com.ANC_TeamEagles.mypurse.PrefManager;
+import com.ANC_TeamEagles.mypurse.utils.PrefManager;
 import com.ANC_TeamEagles.mypurse.R;
 
 
