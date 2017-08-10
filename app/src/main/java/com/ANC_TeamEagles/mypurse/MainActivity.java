@@ -23,8 +23,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
-
 import com.ANC_TeamEagles.mypurse.pojo.TransactionItem;
 import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.ANC_TeamEagles.mypurse.utils.PrefManager;
@@ -37,7 +35,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-
 import com.joaquimley.faboptions.FabOptions;
 
 import java.util.Calendar;
