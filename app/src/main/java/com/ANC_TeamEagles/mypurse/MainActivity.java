@@ -53,13 +53,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DatabaseReference transactionReference;
     private DatabaseReference userReference;
     private DatabaseReference monthlyTransactionReference;
-    private DatabaseReference dayTransactionRef;
+    private DatabaseReference weeklyTransactionRef;
     private DatabaseReference accountBalanceRef;
+    private DatabaseReference todayExpenseRef;
+    private DatabaseReference thisMonthExpenseRef;
 
     private ValueEventListener transactionListener;
-    private ValueEventListener monthlyListener;
-    private ValueEventListener dailyListener;
+    private ValueEventListener monthlyExpenditureListener;
+    private ValueEventListener dailyExpenditureListener;
     private ValueEventListener accBalListener;
+    private ValueEventListener todayExpenseListener;
+    private ValueEventListener thisMonthExpenseListener;
 
 
 
@@ -74,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public BottomNavigationViewHelper helper;
     MenuItem menuItem;
     private PrefManager manager;
+
+    private double previousTodayTotal;
+    private double previousThisMonthTotal;
 
 
     @Override
@@ -145,11 +152,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setUpFirebaseListeners() {
-        userReference = App.appDatabase.getReference().child(manager.getUserEmail());
+        userReference = App.userRef;
         transactionReference = userReference.child(Constants.NODE_TRANSACTION);
         monthlyTransactionReference = userReference.child(Constants.NODE_MONTHLY);
-        dayTransactionRef = userReference.child(Constants.NODE_DAY);
+        weeklyTransactionRef = userReference.child(Constants.NODE_THIS_WEEK);
         accountBalanceRef = userReference.child(Constants.ACCOUNT_TOTAL);
+        todayExpenseRef = userReference.child(Constants.NODE_EXPENDITURE_TODAY);
+        thisMonthExpenseRef = userReference.child(Constants.NODE_EXPENDITURE_THIS_MONTH);
 
         accBalListener = new ValueEventListener() {
             @Override
@@ -160,6 +169,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     addBal.setText(String.valueOf(total));
                 }
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        };
+        todayExpenseListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                previousTodayTotal = dataSnapshot.getValue(Double.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        thisMonthExpenseListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                previousThisMonthTotal = dataSnapshot.getValue(Double.class);
             }
 
             @Override
@@ -189,6 +222,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void detachFirebaseListeners(){
         accountBalanceRef.removeEventListener(accBalListener);
+        todayExpenseRef.removeEventListener(todayExpenseListener);
+        thisMonthExpenseRef.removeEventListener(thisMonthExpenseListener);
     }
 
     @Override
@@ -291,8 +326,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (isIncome){
                     currentBal += transacAmt;
                 }
-                else
+                else{
                     currentBal -= transacAmt;
+                    weeklyTransactionRef.child(day).setValue(previousTodayTotal + transacAmt);
+                    monthlyTransactionReference.child(month).setValue(previousThisMonthTotal +
+                            transacAmt);
+                    todayExpenseRef.setValue(previousTodayTotal + transacAmt);
+                    thisMonthExpenseRef.setValue(previousThisMonthTotal + transacAmt);
+
+
+                }
+
 
 
                 TransactionItem item = new TransactionItem(transacAmt,desc,day+"_"+month,
@@ -300,6 +344,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 accountBalanceRef.setValue(currentBal);
                 String key = transactionReference.push().getKey();
+
                 HashMap<String, Object> map= new HashMap<>();
                 map.put("/"+key, item);
                 transactionReference.updateChildren(map);

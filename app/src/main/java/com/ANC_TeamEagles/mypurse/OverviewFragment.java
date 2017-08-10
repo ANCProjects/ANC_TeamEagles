@@ -48,8 +48,7 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         manager = new PrefManager(getActivity());
-        reference = App.appDatabase.getReference().child(manager.getUserEmail()).child(Constants
-                .NODE_TRANSACTION);
+        reference = App.userRef.child(Constants.NODE_TRANSACTION);
         View view = inflater.inflate(R.layout.overview_fragment, container, false);
         final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
 

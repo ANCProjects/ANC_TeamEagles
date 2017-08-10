@@ -3,12 +3,49 @@ package com.ANC_TeamEagles.mypurse;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ANC_TeamEagles.mypurse.utils.Constants;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 public class ChartsFragment extends Fragment {
+
+    private DatabaseReference weeklyDataRef;
+    private DatabaseReference monthlyDataRef;
+    private ValueEventListener weeklyListener;
+    private ValueEventListener monthlyListener;
+
+    private ArrayList<String> xAxisData;
+    private HashMap<String,Double> yAxisData;
+
+    private boolean isMonthViewChosen;
+
+    @BindView(R.id.bar_chart)
+    BarChart barChart;
+
+    private Unbinder unbinder;
 
     public ChartsFragment() {
 
@@ -19,14 +56,82 @@ public class ChartsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.charts_fragment, container, false);
+        xAxisData = new ArrayList<>();
+        xAxisData.add("monday");
+        xAxisData.add("tuesday");
+        xAxisData.add("wednesday");
+        xAxisData.add("thursday");
+        xAxisData.add("friday");
+        xAxisData.add("saturday");
+        xAxisData.add("sunday");
+
+        yAxisData = new HashMap<>();
+
+        setUpFirebaseVariables();
+
+        View view =inflater.inflate(R.layout.charts_fragment, container, false);
+        unbinder = ButterKnife.bind(this,view);
+
+        return view;
     }
 
+    public void setUpFirebaseVariables(){
+        weeklyDataRef = App.userRef.child(Constants.NODE_THIS_WEEK);
+        monthlyDataRef = App.userRef.child(Constants.NODE_EXPENDITURE_THIS_MONTH);
+
+        weeklyListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!isMonthViewChosen){
+                    yAxisData.clear();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                        yAxisData.put(snapshot.getKey().toLowerCase(), snapshot.getValue(Double.class));
+                        Log.e("LOGGER",snapshot.getKey());
+                    }
+
+                    setUpBarChart();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        monthlyListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (isMonthViewChosen){
+
+                    yAxisData.clear();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                        yAxisData.put(snapshot.getKey().toLowerCase(),snapshot.getValue(Double.class));
+                        Log.e("LOGGER",snapshot.getKey());
+                    }
+
+                    setUpBarChart();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -34,10 +139,59 @@ public class ChartsFragment extends Fragment {
 
     }
 
+    private void attachFirebaseListeners(){
+        monthlyDataRef.addValueEventListener(monthlyListener);
+        weeklyDataRef.addValueEventListener(weeklyListener);
+    }
+
+    private void detachFirebaseListeners(){
+        monthlyDataRef.removeEventListener(monthlyListener);
+        weeklyDataRef.removeEventListener(weeklyListener);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        attachFirebaseListeners();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        detachFirebaseListeners();
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
+        unbinder.unbind();
 
     }
+
+    private void setUpBarChart(){
+        List<BarEntry> barEntries = new ArrayList<>();
+
+        for (int i =0; i < xAxisData.size(); i++){
+            barEntries.add(new BarEntry(i, new BigDecimal(yAxisData.get(xAxisData.get(i))==null?
+                    0: yAxisData.get(xAxisData.get(i)))
+                    .floatValue()));
+            Log.e("LOGGER",""+(yAxisData.get(xAxisData.get(i))==null?
+                    0: yAxisData.get(xAxisData.get(i))));
+        }
+
+        BarDataSet dataSet = new BarDataSet(barEntries, "Expenditure summary");
+        BarData data = new BarData(dataSet);
+        barChart.setData(data);
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisData));
+        barChart.invalidate();
+    }
+
+
 
 }
