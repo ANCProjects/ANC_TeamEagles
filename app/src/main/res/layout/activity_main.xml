@@ -2,11 +2,11 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.ANC_TeamEagles.mypurse.MainActivity"
-    android:id="@+id/activity_main">
+    tools:context="com.ANC_TeamEagles.mypurse.MainActivity">
 
 
     <RelativeLayout
@@ -20,22 +20,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:orientation="vertical">
+
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/topbar_padding">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/myhometoolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                app:titleTextColor="@android:color/white"
-                android:theme="@style/ToolbarTheme"
-                app:titleTextAppearance="@style/Toolbar.TitleText"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                />
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/myhometoolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/ToolbarTheme"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:titleTextAppearance="@style/Toolbar.TitleText"
+                    app:titleTextColor="@android:color/white" />
             </android.support.design.widget.AppBarLayout>
 
             <android.support.design.widget.AppBarLayout
@@ -49,25 +49,25 @@
                     android:layout_gravity="center_horizontal">
 
                     <ImageView
+                        android:id="@+id/currency"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:src="@drawable/ic_naira"
-                        android:id="@+id/currency"
-                        android:layout_marginRight="26dp"
                         android:layout_marginEnd="26dp"
+                        android:layout_marginRight="26dp"
                         android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_naira"
 
                         />
 
                     <TextView
                         android:id="@+id/homeStartBal"
-                        android:layout_toRightOf="@+id/currency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" 0.00"
-                        android:textSize="35dp"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@color/colorWhite"/>
+                        android:layout_toRightOf="@+id/currency"
+                        android:text=" 0.00"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="35dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -84,33 +84,29 @@
             </android.support.design.widget.AppBarLayout>
         </LinearLayout>
 
-            <android.support.v4.view.ViewPager
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/body"
-                android:layout_above="@+id/relLayoutBotbar"
-                android:layout_below="@+id/relLayoutTopbar"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/relLayoutBotbar"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/relLayoutTopbar">
 
 
+        </android.support.v4.view.ViewPager>
 
-            </android.support.v4.view.ViewPager>
-
-            <com.joaquimley.faboptions.FabOptions
-                android:id="@+id/fab_transaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:button_menu="@menu/menu_fab"
-                android:layout_marginTop="-50dp"
-                app:fab_color="?attr/colorAccent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/relLayoutTopbar"
-                android:src="@drawable/ic_add"
-                />
-
-
+        <com.joaquimley.faboptions.FabOptions
+            android:id="@+id/fab_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/relLayoutTopbar"
+            android:layout_marginTop="-50dp"
+            android:src="@drawable/ic_add"
+            app:button_menu="@menu/menu_fab"
+            app:fab_color="?attr/colorAccent" />
 
 
         <RelativeLayout
@@ -124,10 +120,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bottom_bar_background"
-                app:menu="@menu/main"
                 app:itemIconTint="@drawable/bottom_navigation_color_selector"
                 app:itemTextColor="@drawable/bottom_navigation_color_selector"
-                >
+                app:menu="@menu/main">
 
 
             </android.support.design.widget.BottomNavigationView>
