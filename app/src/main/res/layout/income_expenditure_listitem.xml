@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp">
+
+
+    <TextView
+        android:id="@+id/descriptionSymbol"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/category_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        tools:text="S" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/currency_symbol"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/descriptionSymbol"
+        android:layout_toRightOf="@+id/descriptionSymbol"
+        android:fontFamily="sans-serif-medium"
+        android:inputType="textMultiLine"
+        android:textSize="18sp"
+        tools:text="Salary Bonus" />
+
+    <ImageView
+        android:id="@+id/currency_symbol"
+        android:layout_width="24dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@id/description"
+        android:src="@drawable/ic_naira" />
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@id/currency_symbol"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="18sp"
+        tools:text="25000" />
+
+    <TextView
+        android:id="@+id/short_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@id/amount"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="14sp"
+        android:text="On" />
+
+    <TextView
+        android:id="@+id/captureDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/amount"
+        android:layout_toEndOf="@+id/amount"
+        android:layout_toRightOf="@+id/amount"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="14sp"
+        tools:text="Aug 6, 2017" />
+
+
+</RelativeLayout>
+
+
+
