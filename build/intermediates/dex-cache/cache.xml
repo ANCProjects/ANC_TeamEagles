@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Github\ANC_TeamEagles\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="C:\Github\ANC_TeamEagles\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_eb23cdfe0dd37306feeb9a3d421546b979197b05\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Github\ANC_TeamEagles\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d6f5484acb6ab4bed944d89f42e2c2800b73e7d2">
+        <dex dex="C:\Github\ANC_TeamEagles\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_99ec2c2f83601d6ce3b6eb9e96bc13e1a4b1613e\classes.dex" />
+    </item>
+
+</items>

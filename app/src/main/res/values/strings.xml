@@ -23,4 +23,5 @@
     <string name="play_again">Replay Intro</string>
     <string name="transaction_desc">transaction details</string>
     <string name="amount">Amount</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
