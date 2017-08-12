@@ -37,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.joaquimley.faboptions.FabOptions;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.fab_transaction)
     FabOptions transactionsFab;
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     TextView addBal;
     public BottomNavigationViewHelper helper;
     MenuItem menuItem;
@@ -104,18 +107,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-
-
-
         sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.body);
         setupViewPager(viewPager);
         setupBottomView();
 
 
-
         setupFirebaseAuth();
-
 
     }
 
@@ -130,12 +128,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (user == null){
                     // not signed in
+                    Log.e(TAG, "not logged in");
                     startActivityForResult(AuthUI.getInstance()
                                     .createSignInIntentBuilder()
                                     .setProviders(
                                             AuthUI.EMAIL_PROVIDER,
                                             AuthUI.GOOGLE_PROVIDER)
                                     .setTheme(R.style.LoginTheme)
+                                    .setIsSmartLockEnabled(!BuildConfig.DEBUG)
                                     .setLogo(R.drawable.logo)
                                     .build(),
                             rcSignIn);
@@ -166,7 +166,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (dataSnapshot.getValue(Double.class) != null){
                     double total = dataSnapshot.getValue(Double.class);
 
-                    addBal.setText(String.valueOf(total));
+                    addBal.setText(new DecimalFormat("#,###,###,###")
+                            .format(Double.valueOf(total)));
                 }
 
             }
@@ -319,6 +320,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String month = calendar.getDisplayName(Calendar.MONTH,Calendar.LONG, Locale
                         .ENGLISH);
                 String prevBal = addBal.getText().toString();
+                prevBal = prevBal.replace(",","");
 
                 Double currentBal = Double.valueOf(prevBal);
                 Double transacAmt = Double.valueOf(amount);

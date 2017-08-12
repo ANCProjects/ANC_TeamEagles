@@ -11,7 +11,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:background="@drawable/category_circle"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="20sp"
         tools:text="S" />
@@ -23,9 +23,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20sp"
-        android:fontFamily="sans-serif"
+            android:paddingBottom="8dp"
+            android:fontFamily="sans-serif"
             tools:text="Food"
-        android:textStyle="bold"/>
+            android:textStyle="bold"/>
 
     <TextView
             android:id="@+id/amt_item"

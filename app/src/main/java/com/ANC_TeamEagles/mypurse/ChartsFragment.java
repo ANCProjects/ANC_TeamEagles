@@ -38,6 +38,7 @@ public class ChartsFragment extends Fragment {
     private ValueEventListener monthlyListener;
 
     private ArrayList<String> xAxisData;
+    private static String[] xAxisLabel = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
     private HashMap<String,Double> yAxisData;
 
     private boolean isMonthViewChosen;
@@ -188,7 +189,7 @@ public class ChartsFragment extends Fragment {
         BarData data = new BarData(dataSet);
         barChart.setData(data);
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisData));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
         barChart.invalidate();
     }
 
