@@ -44,7 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="3dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/currency_symbol"
         android:fontFamily="sans-serif-medium"
         android:textSize="18sp"
@@ -60,7 +61,7 @@
         android:layout_toRightOf="@id/amount"
         android:fontFamily="sans-serif-medium"
         android:textSize="14sp"
-        android:text="On" />
+        android:text="as of" />
 
     <TextView
         android:id="@+id/captureDate"

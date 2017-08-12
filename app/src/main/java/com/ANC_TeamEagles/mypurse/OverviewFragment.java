@@ -3,6 +3,8 @@ package com.ANC_TeamEagles.mypurse;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.graphics.drawable.GradientDrawable;
 import com.ANC_TeamEagles.mypurse.pojo.TransactionItem;
 import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.ANC_TeamEagles.mypurse.utils.PrefManager;
@@ -58,6 +60,8 @@ public class OverviewFragment extends Fragment {
         adapter = new TransactionAdapter();
         transactionRecycler.setLayoutManager(manager);
         transactionRecycler.setAdapter(adapter);
+        transactionRecycler.addItemDecoration(new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL));
 
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -133,18 +137,28 @@ public class OverviewFragment extends Fragment {
         protected void populateViewHolder(Holder viewHolder, TransactionItem model, int position) {
             viewHolder.descText.setText(model.getDescription());
             viewHolder.amountText.setText(String.valueOf(model.getAmount()));
+            char des = viewHolder.descText.getText().charAt(0);
+            char desc =    Character.toUpperCase(des);
+           viewHolder.symbol.setText(Character.toString(desc));
 
             Log.e("LOGGER", model.getDescription());
 
             Log.e("LOGGER",""+model.isIsIncome());
             if (model.isIsIncome()){
 
-                viewHolder.itemView.setBackgroundColor(
-                        getActivity().getResources().getColor(android.R.color.holo_green_light));
+              //  viewHolder.itemView.setBackgroundColor(
+               //         getActivity().getResources().getColor(android.R.color.holo_green_light));
+                GradientDrawable Circle = (GradientDrawable) viewHolder.symbol.getBackground();
+                int Color = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+               Circle.setColor(Color);
             }
             else {
-                viewHolder.itemView.setBackgroundColor(
-                        getActivity().getResources().getColor(android.R.color.holo_red_light));
+              //  viewHolder.itemView.setBackgroundColor(
+                //        getActivity().getResources().getColor(android.R.color.holo_red_light));
+                GradientDrawable Circle = (GradientDrawable) viewHolder.symbol.getBackground();
+                int Color = ContextCompat.getColor(getContext(), R.color.dot_dark_screen1);
+                Circle.setColor(Color);
+
             }
 
         }
@@ -156,12 +170,13 @@ public class OverviewFragment extends Fragment {
 
         TextView descText;
         TextView amountText;
+       TextView symbol;
 
         public Holder(View itemView) {
             super(itemView);
             descText= (TextView)itemView.findViewById(R.id.tv_desc_item);
             amountText = (TextView) itemView.findViewById(R.id.amt_item);
-
+            symbol = (TextView) itemView.findViewById(R.id.descriptionSymbol);
 
         }
     }

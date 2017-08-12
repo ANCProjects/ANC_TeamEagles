@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 
 
 public class IncomeFragment extends Fragment {
+
+    TextView desc_symbol;
 
 
     public IncomeFragment() {
@@ -34,6 +37,8 @@ public class IncomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.income_fragment, container, false);
 
+
+
         ArrayList<IncomeExpenditure> incomeList = new ArrayList<>();
 
         incomeList.add(new IncomeExpenditure("Salary", "70,000", "7 Aug, 2017"));
@@ -42,6 +47,8 @@ public class IncomeFragment extends Fragment {
         ListView incomeListView = (ListView)view.findViewById(R.id.custom_listview);
         IncomeExpenditureAdapter listAdapter = new IncomeExpenditureAdapter(getActivity(), R.layout.income_expenditure_listitem, incomeList);
         incomeListView.setAdapter(listAdapter);
+
+
         return view;
     }
 
