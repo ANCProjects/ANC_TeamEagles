@@ -28,7 +28,8 @@
         android:fontFamily="sans-serif-medium"
         android:inputType="textMultiLine"
         android:textSize="18sp"
-        tools:text="Salary Bonus" />
+        tools:text="Salary Bonus"
+        android:textStyle="bold"/>
 
     <ImageView
         android:id="@+id/currency_symbol"
@@ -71,8 +72,9 @@
         android:layout_toEndOf="@+id/amount"
         android:layout_toRightOf="@+id/amount"
         android:fontFamily="sans-serif-medium"
-        android:textSize="14sp"
-        tools:text="Aug 6, 2017" />
+        android:textSize="12sp"
+        tools:text="Aug 6, 2017"
+        android:textColor="@color/bg_screen3"/>
 
 
 </RelativeLayout>
