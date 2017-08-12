@@ -14,5 +14,6 @@ public class Constants {
     public static final String NODE_THIS_WEEK = "weekly expenditure data";
     public static final String NODE_EXPENDITURE_TODAY = "expenditure today";
     public static final String NODE_EXPENDITURE_THIS_MONTH = "expenditure this month";
+    public static final String QUERY_INCOME = "isIncome";
 
 }

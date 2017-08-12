@@ -25,11 +25,14 @@
             android:textColor="@color/dot_dark_screen1"/>
     </LinearLayout>
 
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/custom_listview"
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rv_expense"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/breadcrumb"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:layoutManager="LinearLayoutManager"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"

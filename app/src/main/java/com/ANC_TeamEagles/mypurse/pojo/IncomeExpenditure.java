@@ -1,4 +1,4 @@
-package com.ANC_TeamEagles.mypurse;
+package com.ANC_TeamEagles.mypurse.pojo;
 
 /**
  * Created by EmmanuelBaldwin on 8/6/2017.
@@ -24,23 +24,12 @@ public class IncomeExpenditure {
         return descriptionText;
     }
 
-    public void setDescriptionText(String descriptionText) {
-        this.descriptionText = descriptionText;
-    }
-
     public String getAmountText() {
         return amountText;
     }
 
-    public void setAmountText(String amountText) {
-        this.amountText = amountText;
-    }
 
     public String getDateCaptured() {
         return dateCaptured;
-    }
-
-    public void setDateCaptured(String dateCaptured) {
-        this.dateCaptured = dateCaptured;
     }
 }

@@ -52,16 +52,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SectionPagerAdapter sectionPagerAdapter;
 
     private DatabaseReference transactionReference;
-    private DatabaseReference userReference;
+
     private DatabaseReference monthlyTransactionReference;
     private DatabaseReference weeklyTransactionRef;
     private DatabaseReference accountBalanceRef;
     private DatabaseReference todayExpenseRef;
     private DatabaseReference thisMonthExpenseRef;
 
-    private ValueEventListener transactionListener;
-    private ValueEventListener monthlyExpenditureListener;
-    private ValueEventListener dailyExpenditureListener;
     private ValueEventListener accBalListener;
     private ValueEventListener todayExpenseListener;
     private ValueEventListener thisMonthExpenseListener;
@@ -152,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setUpFirebaseListeners() {
-        userReference = App.userRef;
+        DatabaseReference userReference = App.userRef;
         transactionReference = userReference.child(Constants.NODE_TRANSACTION);
         monthlyTransactionReference = userReference.child(Constants.NODE_MONTHLY);
         weeklyTransactionRef = userReference.child(Constants.NODE_THIS_WEEK);
@@ -220,6 +217,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void attachFirebaseListeners(){
         accountBalanceRef.addValueEventListener(accBalListener);
+        todayExpenseRef.addValueEventListener(todayExpenseListener);
+        thisMonthExpenseRef.addValueEventListener(thisMonthExpenseListener);
     }
     public void detachFirebaseListeners(){
         accountBalanceRef.removeEventListener(accBalListener);
