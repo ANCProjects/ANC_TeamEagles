@@ -30,7 +30,7 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
 
         String desc = model.getDescription();
         viewHolder.descText.setText(desc);
-        viewHolder.symbol.setText(desc.substring(0,1));
+        viewHolder.symbol.setText(desc.substring(0,1).toUpperCase());
         viewHolder.amountText.setText(new DecimalFormat("#,###,###,###").format(model.getAmount()));
 
         if (model.isIsIncome()){
