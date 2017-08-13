@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">myPurse</string>
-    <string name="startBal">START BAL</string>
+    <string name="startBal">Allowance</string>
+    <string name="expendable_amt">Expendable Amount</string>
     <string name="addBalance">Add</string>
     <string name="cancel">Cancel</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

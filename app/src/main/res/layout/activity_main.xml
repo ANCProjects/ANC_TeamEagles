@@ -40,47 +40,97 @@
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp">
+                android:layout_height="80dp">
 
-                <RelativeLayout
-                    android:id="@+id/topContent"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/topContent">
 
-                    <ImageView
-                        android:id="@+id/currency"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="26dp"
-                        android:layout_marginRight="26dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/ic_naira"
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:paddingLeft="16dp">
 
-                        />
+                        <ImageView
+                            android:id="@+id/expendable_currency"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="9dp"
+                            android:src="@drawable/ic_naira"
+                            android:tint="@color/colorWhite"
 
-                    <TextView
-                        android:id="@+id/homeStartBal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_toRightOf="@+id/currency"
-                        android:layout_toEndOf="@+id/currency"
-                        android:layout_marginStart="20dp"
-                        android:text=" 0.00"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="35dp" />
+                            />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/homeStartBal"
-                        android:layout_centerHorizontal="true"
-                        android:text="@string/startBal"
-                        android:textColor="#ffffff"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/expendable_amt"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/expendable_currency"
+                            android:layout_toEndOf="@+id/expendable_currency"
+                            android:text=" 0.00"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="25dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/expendable_amt"
+                            android:text="@string/expendable_amt"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp"
+                            android:fontFamily="sans-serif-condensed" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:paddingBottom="16dp">
+
+
+                        <ImageView
+                            android:id="@+id/currency"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="9dp"
+                            android:src="@drawable/ic_naira"
+                            android:tint="@color/colorWhite"
+                            />
+
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/homeStartBal"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/currency"
+                            android:layout_toEndOf="@+id/currency"
+                            android:text=" 0.00"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="25dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/homeStartBal"
+                            android:paddingLeft="10dp"
+                            android:text="@string/startBal"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:layout_marginBottom="10dp"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
 
 
             </android.support.design.widget.AppBarLayout>

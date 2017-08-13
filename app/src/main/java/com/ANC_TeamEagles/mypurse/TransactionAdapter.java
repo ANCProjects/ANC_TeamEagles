@@ -30,7 +30,7 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
     protected void populateViewHolder(TransactionHolder viewHolder, TransactionItem model, int position) {
 
         String desc = model.getDescription();
-        viewHolder.descText.setText(desc);
+        viewHolder.descText.setText(desc.substring(0, 1).toUpperCase() + desc.substring(1));
         viewHolder.symbol.setText(desc.substring(0,1).toUpperCase());
         viewHolder.amountText.setText(new DecimalFormat("#,###,###,###").format(model.getAmount()));
         CharSequence time = DateUtils.getRelativeDateTimeString(context,model.getTimeCreated(),
@@ -40,6 +40,9 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
 
 
         if (model.isIsIncome()){
+            viewHolder.amountText.setText(" +N"+ new DecimalFormat("#,###,###,###").format(model.getAmount()));
+
+            viewHolder.amountText.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
 
 
             GradientDrawable Circle = (GradientDrawable) viewHolder.symbol.getBackground();
@@ -47,6 +50,8 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
             Circle.setColor(Color);
         }
         else {
+            viewHolder.amountText.setText("- N"+ new DecimalFormat("#,###,###,###").format(model.getAmount()));
+            viewHolder.amountText.setTextColor(ContextCompat.getColor(context,R.color.dot_dark_screen1));
 
             GradientDrawable Circle = (GradientDrawable) viewHolder.symbol.getBackground();
             int Color = ContextCompat.getColor(context, R.color.dot_dark_screen1);
