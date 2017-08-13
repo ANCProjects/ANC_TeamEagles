@@ -11,6 +11,7 @@ public class TransactionItem {
     private String day_month;
     private double totalSoFar;
     private boolean isIncome;
+    private long timeCreated;
 
 
 
@@ -18,12 +19,14 @@ public class TransactionItem {
     public TransactionItem() {
     }
 
-    public TransactionItem(double amount, String description, String day_month, double totalSoFar, boolean isIncome) {
+    public TransactionItem(double amount, String description, String day_month, double
+            totalSoFar, boolean isIncome, long timeCreated) {
         this.amount = amount;
         this.description = description;
         this.day_month = day_month;
         this.totalSoFar = totalSoFar;
         this.isIncome = isIncome;
+        this.timeCreated = timeCreated;
     }
 
     public double getAmount() {
@@ -44,5 +47,9 @@ public class TransactionItem {
 
     public boolean isIsIncome() {
         return isIncome;
+    }
+
+    public long getTimeCreated() {
+        return timeCreated;
     }
 }

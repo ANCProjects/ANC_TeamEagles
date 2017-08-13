@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,6 +33,11 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
         viewHolder.descText.setText(desc);
         viewHolder.symbol.setText(desc.substring(0,1).toUpperCase());
         viewHolder.amountText.setText(new DecimalFormat("#,###,###,###").format(model.getAmount()));
+        CharSequence time = DateUtils.getRelativeDateTimeString(context,model.getTimeCreated(),
+                DateUtils.SECOND_IN_MILLIS,DateUtils.DAY_IN_MILLIS,DateUtils.FORMAT_ABBREV_ALL);
+        viewHolder.date.setText(time);
+
+
 
         if (model.isIsIncome()){
 
@@ -54,13 +60,14 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
         TextView descText;
         TextView amountText;
         TextView symbol;
+        TextView date;
 
 
         public TransactionHolder(View itemView) {
             super(itemView);
-
+            date = (TextView) itemView.findViewById(R.id.captureDate);
             amountText = (TextView)itemView.findViewById(R.id.amt_item);
-             descText = (TextView)itemView.findViewById(R.id.tv_desc_item);
+            descText = (TextView)itemView.findViewById(R.id.tv_desc_item);
             symbol = (TextView)itemView.findViewById(R.id.descriptionSymbol);
         }
     }

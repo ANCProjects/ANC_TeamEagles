@@ -65,6 +65,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_toRightOf="@+id/currency"
+                        android:layout_toEndOf="@+id/currency"
+                        android:layout_marginStart="20dp"
                         android:text=" 0.00"
                         android:textColor="@color/colorWhite"
                         android:textSize="35dp" />

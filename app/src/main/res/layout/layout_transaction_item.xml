@@ -33,9 +33,22 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+            android:fontFamily="sans-serif"
             android:textSize="15sp"
             tools:text="N20,000"
-        android:textColor="@color/bg_screen3"/>
+            android:textColor="@color/bg_screen3"/>
+
+    <TextView
+            android:id="@+id/captureDate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/amount"
+            android:layout_toEndOf="@+id/amount"
+            android:layout_toRightOf="@+id/amount"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="12sp"
+            tools:text="Aug 6, 2017"
+            android:textColor="@color/bg_screen3"/>
 
 </LinearLayout>

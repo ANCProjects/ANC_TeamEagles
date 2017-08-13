@@ -46,6 +46,11 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:10.0.1'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
     testCompile 'junit:junit:4.12'
+
+    //image loading
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
 }
 

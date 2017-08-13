@@ -7,6 +7,7 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -36,6 +37,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.joaquimley.faboptions.FabOptions;
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -45,6 +47,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private double previousTodayTotal;
     private double previousThisMonthTotal;
 
+    private View navHeaderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     //logged in
 
                     manager.saveUserEmail(user.getEmail());
+                    setUserCredentials(user);
+
 
 
                 }
@@ -166,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     addBal.setText(new DecimalFormat("#,###,###,###")
                             .format(Double.valueOf(total)));
                 }
+                else
+                    addBal.setText("0.00");
 
             }
 
@@ -178,7 +186,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         todayExpenseListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                previousTodayTotal = dataSnapshot.getValue(Double.class);
+                previousTodayTotal = dataSnapshot.getValue(Double.class) == null ? 0
+                        : dataSnapshot.getValue(Double.class);
             }
 
             @Override
@@ -190,7 +199,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         thisMonthExpenseListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                previousThisMonthTotal = dataSnapshot.getValue(Double.class);
+                previousThisMonthTotal = dataSnapshot.getValue(Double.class) == null? 0
+                        : dataSnapshot.getValue(Double.class);
             }
 
             @Override
@@ -341,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
                 TransactionItem item = new TransactionItem(transacAmt,desc,day+"_"+month,
-                        currentBal,isIncome);
+                        currentBal,isIncome,now);
 
                 accountBalanceRef.setValue(currentBal);
                 String key = transactionReference.push().getKey();
@@ -438,17 +448,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_overview) {
+            viewPager.setCurrentItem(1);
+        } else if (id == R.id.nav_chart) {
+            viewPager.setCurrentItem(2);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_reset) {
+            clearUserData();
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_about) {
+
+        } else if (id == R.id.nav_rate){
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.signout) {
+        } else if (id == R.id.nav_signout) {
             AuthUI.getInstance().signOut(this);
             Toast.makeText(getApplicationContext(), "Succesfully signed out", Toast.LENGTH_SHORT).show();
             startActivityForResult(AuthUI.getInstance()
@@ -478,6 +492,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navHeaderView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -513,5 +528,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(getApplicationContext(), "no_internet_connection", Toast.LENGTH_SHORT).show();
             return;
         }
+    }
+
+    private void setUserCredentials(FirebaseUser user){
+        String photoUrl = user.getPhotoUrl() == null? "" : user.getPhotoUrl().toString();
+        String fullName = user.getDisplayName();
+        String email = user.getEmail();
+
+        TextView fullNameTextView = (TextView) navHeaderView.findViewById(R.id.tv_header_username);
+        TextView emailTextview = (TextView) navHeaderView.findViewById(R.id.tv_header_email);
+        CircleImageView userProfile = (CircleImageView) navHeaderView.findViewById(R.id.iv_header_pic);
+
+        fullNameTextView.setText(fullName);
+        emailTextview.setText(email);
+        Picasso.with(this).load(photoUrl)
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+                .into(userProfile);
+
+
+    }
+
+    private void clearUserData(){
+        new AlertDialog.Builder(this)
+                .setMessage("This will clear all transaction details\n Continue?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        App.userRef.removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                if (databaseError == null)
+                                    Snackbar.make(getWindow().getDecorView().getRootView(),"Reset " +
+                                            "successful",Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).setCancelable(true)
+                .show();
     }
 }

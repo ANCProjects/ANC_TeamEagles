@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+    <group android:id="@+id/app" android:checkableBehavior="single">
+
+        <item android:id="@+id/nav_overview"
+              android:title="@string/transaction_history"
+              android:icon="@drawable/ic_import_export_black_24dp"
+        />
+
+        <item android:id="@+id/nav_chart"
+              android:title="@string/expenditure_trend"
+              android:icon="@drawable/ic_show_chart_black_24dp" />
+
+        <item android:id="@+id/nav_reset"
+              android:title="@string/reset"
+              android:icon="@drawable/ic_delete_sweep_black_24dp"
+              />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
+
+    <group android:id="@+id/system" android:checkableBehavior="single">
+            <item android:id="@+id/nav_about"
+                  android:title="@string/about_us"
+                  android:icon="@drawable/ic_person_black_24dp" />
+
+            <item android:id="@+id/nav_rate"
+                  android:title="@string/rate_us"
+                  android:icon="@drawable/ic_thumbs_up_down_black_24dp" />
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="@string/share" />
             <item
-                android:id="@+id/signout"
-                android:icon="@drawable/ic_signout"
-                android:title="SignOut" />
-        </menu>
-    </item>
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
+                android:title="@string/signout" />
+    </group>
 
 </menu>

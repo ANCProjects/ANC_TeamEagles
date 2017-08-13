@@ -24,4 +24,11 @@
     <string name="transaction_desc">transaction details</string>
     <string name="amount">Amount</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="about_us">About us</string>
+    <string name="rate_us">Rate us</string>
+    <string name="share">Share</string>
+    <string name="signout">SignOut</string>
+    <string name="transaction_history">Transaction history</string>
+    <string name="reset">Reset account</string>
+    <string name="expenditure_trend">Expenditure trend</string>
 </resources>
