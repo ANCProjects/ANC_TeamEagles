@@ -58,7 +58,7 @@
                             android:id="@+id/expendable_currency"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginTop="9dp"
+                            android:layout_marginTop="8dp"
                             android:src="@drawable/ic_naira"
                             android:tint="@color/colorWhite"
 
@@ -101,7 +101,7 @@
                             android:id="@+id/currency"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginTop="9dp"
+                            android:layout_marginTop="8dp"
                             android:src="@drawable/ic_naira"
                             android:tint="@color/colorWhite"
                             />

@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemThatWasClickedId = item.getItemId();
-        if (itemThatWasClickedId == R.id.share) {
+        if (itemThatWasClickedId == R.id.notifications) {
             return true;
         }
         return super.onOptionsItemSelected(item);
