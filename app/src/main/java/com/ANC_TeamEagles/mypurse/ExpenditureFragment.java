@@ -33,7 +33,7 @@ public class ExpenditureFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.expenditure_fragment, container, false);
-        Query incomeQuery = App.userRef.child(Constants.NODE_TRANSACTION)
+        Query incomeQuery = App.transactionReference
                 .orderByChild(Constants.QUERY_INCOME)
                 .equalTo(false);
 

@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ANC_TeamEagles.mypurse.pojo.TransactionItem;
-import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.ANC_TeamEagles.mypurse.utils.PrefManager;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -49,18 +48,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.ANC_TeamEagles.mypurse.App.accountBalanceRef;
+import static com.ANC_TeamEagles.mypurse.App.monthlyTransactionReference;
+import static com.ANC_TeamEagles.mypurse.App.thisMonthExpenseRef;
+import static com.ANC_TeamEagles.mypurse.App.todayExpenseRef;
+import static com.ANC_TeamEagles.mypurse.App.transactionReference;
+import static com.ANC_TeamEagles.mypurse.App.weeklyTransactionRef;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ViewPager viewPager;
     private SectionPagerAdapter sectionPagerAdapter;
 
-    private DatabaseReference transactionReference;
-
-    private DatabaseReference monthlyTransactionReference;
-    private DatabaseReference weeklyTransactionRef;
-    private DatabaseReference accountBalanceRef;
-    private DatabaseReference todayExpenseRef;
-    private DatabaseReference thisMonthExpenseRef;
 
     private ValueEventListener accBalListener;
     private ValueEventListener todayExpenseListener;
@@ -86,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private double previousThisMonthTotal;
 
     private View navHeaderView;
+    private Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,13 +155,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setUpFirebaseListeners() {
-        DatabaseReference userReference = App.userRef;
-        transactionReference = userReference.child(Constants.NODE_TRANSACTION);
-        monthlyTransactionReference = userReference.child(Constants.NODE_MONTHLY);
-        weeklyTransactionRef = userReference.child(Constants.NODE_THIS_WEEK);
-        accountBalanceRef = userReference.child(Constants.ACCOUNT_TOTAL);
-        todayExpenseRef = userReference.child(Constants.NODE_EXPENDITURE_TODAY);
-        thisMonthExpenseRef = userReference.child(Constants.NODE_EXPENDITURE_THIS_MONTH);
 
         accBalListener = new ValueEventListener() {
             @Override
@@ -321,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String amount = amtText.getText().toString();
                 String desc = transacDetails.getText().toString();
                 boolean isIncome = view.getId() == R.id.fab_add;
-                Calendar calendar = Calendar.getInstance();
+
                 long now = System.currentTimeMillis();
                 calendar.setTimeInMillis(now);
                 String day = calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale
@@ -344,8 +337,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             transacAmt);
                     todayExpenseRef.setValue(previousTodayTotal + transacAmt);
                     thisMonthExpenseRef.setValue(previousThisMonthTotal + transacAmt);
-
-
                 }
 
 

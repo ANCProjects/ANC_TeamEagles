@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -17,11 +16,11 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,17 +28,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.ANC_TeamEagles.mypurse.App.thisMonthExpenseRef;
+import static com.ANC_TeamEagles.mypurse.App.weeklyTransactionRef;
+
 
 public class ChartsFragment extends Fragment {
 
-    private DatabaseReference weeklyDataRef;
-    private DatabaseReference monthlyDataRef;
+
     private ValueEventListener weeklyListener;
     private ValueEventListener monthlyListener;
 
     private ArrayList<String> xAxisData;
     private static String[] xAxisLabel = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
     private HashMap<String,Double> yAxisData;
+    private Calendar calendar = Calendar.getInstance();
 
     private boolean isMonthViewChosen;
 
@@ -84,8 +86,7 @@ public class ChartsFragment extends Fragment {
     }
 
     public void setUpFirebaseVariables(){
-        weeklyDataRef = App.userRef.child(Constants.NODE_THIS_WEEK);
-        monthlyDataRef = App.userRef.child(Constants.NODE_EXPENDITURE_THIS_MONTH);
+
 
         weeklyListener = new ValueEventListener() {
             @Override
@@ -141,13 +142,13 @@ public class ChartsFragment extends Fragment {
     }
 
     private void attachFirebaseListeners(){
-        monthlyDataRef.addValueEventListener(monthlyListener);
-        weeklyDataRef.addValueEventListener(weeklyListener);
+        thisMonthExpenseRef.addValueEventListener(monthlyListener);
+        weeklyTransactionRef.addValueEventListener(weeklyListener);
     }
 
     private void detachFirebaseListeners(){
-        monthlyDataRef.removeEventListener(monthlyListener);
-        weeklyDataRef.removeEventListener(weeklyListener);
+        thisMonthExpenseRef.removeEventListener(monthlyListener);
+        weeklyTransactionRef.removeEventListener(weeklyListener);
     }
 
     @Override

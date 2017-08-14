@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.ANC_TeamEagles.mypurse.utils.PrefManager;
 import com.google.firebase.database.DatabaseReference;
 
@@ -42,7 +41,7 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         manager = new PrefManager(getActivity());
-        reference = App.userRef.child(Constants.NODE_TRANSACTION);
+        reference = App.transactionReference;
         View view = inflater.inflate(R.layout.overview_fragment, container, false);
         final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
 

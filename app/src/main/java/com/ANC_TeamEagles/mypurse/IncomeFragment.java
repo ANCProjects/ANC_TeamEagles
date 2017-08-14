@@ -34,7 +34,7 @@ public class IncomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.income_fragment, container, false);
 
-        Query incomeQuery = App.userRef.child(Constants.NODE_TRANSACTION)
+        Query incomeQuery = App.transactionReference
                 .orderByChild(Constants.QUERY_INCOME).equalTo(true);
 
         RecyclerView incomeRecycler = (RecyclerView) view.findViewById(R.id.rv_income);
