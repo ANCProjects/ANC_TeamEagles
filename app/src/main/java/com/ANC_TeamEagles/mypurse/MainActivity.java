@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -165,13 +166,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         accBalListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue(Double.class) != null){
-                     currentAccountBalance = dataSnapshot.getValue(Double.class);
-
-                    addBal.setText(formatAmount(currentAccountBalance));
-                }
-                else
-                    addBal.setText("0.00");
+                currentAccountBalance = dataSnapshot.getValue(Double.class) == null ? 0 :
+                        dataSnapshot.getValue(Double.class);
+                addBal.setText(formatAmount(currentAccountBalance));
 
             }
 
@@ -321,9 +318,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                "amount cannot be less than 0");
                     }
                     else {
-                        expendableAmtRef.setValue(balanceAmt);
-                        double remainingTotalBalance = currentAccountBalance - balanceAmt;
-//                        accountBalanceRef.setValue(remainingTotalBalance);
+                        if (balanceAmt < 0)
+                            displayMessageToUser("No money to spend");
+                        else
+                            expendableAmtRef.setValue(balanceAmt);
                     }
 
                 }
@@ -370,34 +368,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String month = calendar.getDisplayName(Calendar.MONTH,Calendar.LONG, Locale
                         .ENGLISH);
 
+                if (!TextUtils.isDigitsOnly(amount))
+                    amtText.setError("Only numbers are allowed");
+                else if (!TextUtils.isEmpty(desc))
+                    transacDetails.setError("Cannot be empty");
+                else {
+                    Double transacAmt = Double.valueOf(amount);
 
-                Double transacAmt = Double.valueOf(amount);
+                    if (isIncome){
+                        currentAccountBalance += transacAmt;
+                    }
+                    else{
+                        if (expendableAmtLeft <= 0){
+                            displayMessageToUser("Expendable amount is exhausted\n set an amount");
+                        }
+                        else {
+                            currentAccountBalance -= transacAmt;
+                            weeklyTransactionRef.child(day).setValue(previousTodayTotal + transacAmt);
+                            monthlyTransactionReference.child(month).setValue(previousThisMonthTotal +
+                                    transacAmt);
+                            todayExpenseRef.setValue(previousTodayTotal + transacAmt);
+                            thisMonthExpenseRef.setValue(previousThisMonthTotal + transacAmt);
+                            expendableAmtLeft -= transacAmt;
+                            expendableAmtRef.setValue(expendableAmtLeft);
+                        }
 
-                if (isIncome){
-                    currentAccountBalance += transacAmt;
+                    }
+
+
+
+                    TransactionItem item = new TransactionItem(transacAmt,desc,day+"_"+month,
+                            currentAccountBalance,isIncome,now);
+
+                    accountBalanceRef.setValue(currentAccountBalance);
+                    String key = transactionReference.push().getKey();
+
+                    HashMap<String, Object> map= new HashMap<>();
+                    map.put("/"+key, item);
+                    transactionReference.updateChildren(map);
                 }
-                else{
-                    currentAccountBalance -= transacAmt;
-                    weeklyTransactionRef.child(day).setValue(previousTodayTotal + transacAmt);
-                    monthlyTransactionReference.child(month).setValue(previousThisMonthTotal +
-                            transacAmt);
-                    todayExpenseRef.setValue(previousTodayTotal + transacAmt);
-                    thisMonthExpenseRef.setValue(previousThisMonthTotal + transacAmt);
-                    expendableAmtLeft -= transacAmt;
-                    expendableAmtRef.setValue(expendableAmtLeft);
-                }
 
-
-
-                TransactionItem item = new TransactionItem(transacAmt,desc,day+"_"+month,
-                        currentAccountBalance,isIncome,now);
-
-                accountBalanceRef.setValue(currentAccountBalance);
-                String key = transactionReference.push().getKey();
-
-                HashMap<String, Object> map= new HashMap<>();
-                map.put("/"+key, item);
-                transactionReference.updateChildren(map);
             }
         });
 
