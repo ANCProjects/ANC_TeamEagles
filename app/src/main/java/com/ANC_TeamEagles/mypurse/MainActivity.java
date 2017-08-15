@@ -1,5 +1,8 @@
 package com.ANC_TeamEagles.mypurse;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +42,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.joaquimley.faboptions.FabOptions;
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -49,11 +52,13 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.ANC_TeamEagles.mypurse.App.accountBalanceRef;
+import static com.ANC_TeamEagles.mypurse.App.expendableAmtRef;
 import static com.ANC_TeamEagles.mypurse.App.monthlyTransactionReference;
 import static com.ANC_TeamEagles.mypurse.App.thisMonthExpenseRef;
 import static com.ANC_TeamEagles.mypurse.App.todayExpenseRef;
 import static com.ANC_TeamEagles.mypurse.App.transactionReference;
 import static com.ANC_TeamEagles.mypurse.App.weeklyTransactionRef;
+import static com.ANC_TeamEagles.mypurse.utils.Helpers.formatAmount;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ValueEventListener accBalListener;
     private ValueEventListener todayExpenseListener;
     private ValueEventListener thisMonthExpenseListener;
+    private ValueEventListener expendableAmountListener;
 
 
 
@@ -74,15 +80,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.fab_transaction)
     FabOptions transactionsFab;
 
+    @BindView(R.id.expendable_amt)
+    TextView expendableAmtTextView;
+
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    @BindView(R.id.homeStartBal)
     TextView addBal;
+
     public BottomNavigationViewHelper helper;
     MenuItem menuItem;
     private PrefManager manager;
 
-    private double previousTodayTotal;
-    private double previousThisMonthTotal;
+    private static boolean isNotificationSent;
+
+    private static double previousTodayTotal = 0;
+    private static double previousThisMonthTotal = 0;
+    private static double expendableAmtLeft = 0;
+    private static double currentAccountBalance = 0;
 
     private View navHeaderView;
     private Calendar calendar = Calendar.getInstance();
@@ -98,15 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationDrawer();
         manager = new PrefManager(MainActivity.this);
         setUpFirebaseListeners();
-
-        addBal = (TextView) findViewById(R.id.homeStartBal);
-
-        addBal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchStartBalanceDialog();
-            }
-        });
 
         sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.body);
@@ -160,10 +166,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(Double.class) != null){
-                    double total = dataSnapshot.getValue(Double.class);
+                     currentAccountBalance = dataSnapshot.getValue(Double.class);
 
-                    addBal.setText(new DecimalFormat("#,###,###,###")
-                            .format(Double.valueOf(total)));
+                    addBal.setText(formatAmount(currentAccountBalance));
                 }
                 else
                     addBal.setText("0.00");
@@ -174,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
+
 
         };
         todayExpenseListener = new ValueEventListener() {
@@ -203,7 +210,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         };
 
 
+        expendableAmountListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                expendableAmtLeft = dataSnapshot.getValue(Double.class) == null ? 0 :
+                        dataSnapshot.getValue(Double.class);
+                expendableAmtTextView.setText(formatAmount(expendableAmtLeft));
+                addBal.setText(formatAmount(currentAccountBalance));
+                if (expendableAmtLeft == 0 && !isNotificationSent){
+                    //send notification
+                    showNotification("You have exhausted your expendable amount");
 
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
 
 
 
@@ -222,11 +248,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         accountBalanceRef.addValueEventListener(accBalListener);
         todayExpenseRef.addValueEventListener(todayExpenseListener);
         thisMonthExpenseRef.addValueEventListener(thisMonthExpenseListener);
+        expendableAmtRef.addValueEventListener(expendableAmountListener);
     }
     public void detachFirebaseListeners(){
         accountBalanceRef.removeEventListener(accBalListener);
         todayExpenseRef.removeEventListener(todayExpenseListener);
         thisMonthExpenseRef.removeEventListener(thisMonthExpenseListener);
+        expendableAmtRef.removeEventListener(expendableAmountListener);
     }
 
     @Override
@@ -264,22 +292,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    final public void launchStartBalanceDialog(){
+    @OnClick({R.id.homeStartBal, R.id.expendable_amt})
+    final public void launchStartBalanceDialog(final View view){
+
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         final View inflator = inflater.inflate(R.layout.add_startbalance_alert_dialog, null);
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
         alert.setView(inflator);
 
-        final EditText startBal = (EditText) inflator.findViewById(R.id.add_start_bal);
-        //startBal.addTextChangedListener(new NumberTextWatcherForThousand(startBal));
+        final EditText enteredAmount = (EditText) inflator.findViewById(R.id.add_start_bal);
 
 
         alert.setPositiveButton(R.string.addBalance, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id)
             {
-                String balance = startBal.getText().toString();
-                accountBalanceRef.setValue(Double.valueOf(balance));
-//                addBal.setText(" "+ balance);
+                String balance = enteredAmount.getText().toString();
+                final double balanceAmt = Double.valueOf(balance);
+                if (view.getId() == R.id.homeStartBal){
+                    accountBalanceRef.setValue(balanceAmt);
+                }
+                else if (view.getId() == R.id.expendable_amt){
+                    if (balanceAmt > currentAccountBalance){
+                        displayMessageToUser("Expendable " +
+                                "amount cannot be greater than account balance");
+                    }
+                    else if (balanceAmt < 0 ){
+                       displayMessageToUser("Expendable " +
+                               "amount cannot be less than 0");
+                    }
+                    else {
+                        expendableAmtRef.setValue(balanceAmt);
+                        double remainingTotalBalance = currentAccountBalance - balanceAmt;
+//                        accountBalanceRef.setValue(remainingTotalBalance);
+                    }
+
+                }
+
 
             }
         });
@@ -321,30 +369,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .ENGLISH);
                 String month = calendar.getDisplayName(Calendar.MONTH,Calendar.LONG, Locale
                         .ENGLISH);
-                String prevBal = addBal.getText().toString();
-                prevBal = prevBal.replace(",","");
 
-                Double currentBal = Double.valueOf(prevBal);
+
                 Double transacAmt = Double.valueOf(amount);
 
                 if (isIncome){
-                    currentBal += transacAmt;
+                    currentAccountBalance += transacAmt;
                 }
                 else{
-                    currentBal -= transacAmt;
+                    currentAccountBalance -= transacAmt;
                     weeklyTransactionRef.child(day).setValue(previousTodayTotal + transacAmt);
                     monthlyTransactionReference.child(month).setValue(previousThisMonthTotal +
                             transacAmt);
                     todayExpenseRef.setValue(previousTodayTotal + transacAmt);
                     thisMonthExpenseRef.setValue(previousThisMonthTotal + transacAmt);
+                    expendableAmtLeft -= transacAmt;
+                    expendableAmtRef.setValue(expendableAmtLeft);
                 }
 
 
 
                 TransactionItem item = new TransactionItem(transacAmt,desc,day+"_"+month,
-                        currentBal,isIncome,now);
+                        currentAccountBalance,isIncome,now);
 
-                accountBalanceRef.setValue(currentBal);
+                accountBalanceRef.setValue(currentAccountBalance);
                 String key = transactionReference.push().getKey();
 
                 HashMap<String, Object> map= new HashMap<>();
@@ -564,4 +612,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }).setCancelable(true)
                 .show();
     }
+
+    private void displayMessageToUser(String message){
+        Snackbar.make(getWindow().getDecorView().getRootView(),message,Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
+    private void showNotification(String message){
+
+        final int notificationID = 102;
+        Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent
+                .getActivity(this,0,mainActivityIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pendingIntent)
+                .setContentTitle("My Purse")
+                .setContentText(message)
+                .build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(notificationID,notification);
+        isNotificationSent = true;
+    }
+
+
 }

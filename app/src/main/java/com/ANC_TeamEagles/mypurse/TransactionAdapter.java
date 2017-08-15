@@ -12,7 +12,7 @@ import com.ANC_TeamEagles.mypurse.pojo.TransactionItem;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
 
-import java.text.DecimalFormat;
+import static com.ANC_TeamEagles.mypurse.utils.Helpers.formatAmount;
 
 /**
  * Created by EmmanuelBaldwin on 8/6/2017.
@@ -32,7 +32,7 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
         String desc = model.getDescription();
         viewHolder.descText.setText(desc.substring(0, 1).toUpperCase() + desc.substring(1));
         viewHolder.symbol.setText(desc.substring(0,1).toUpperCase());
-        viewHolder.amountText.setText(new DecimalFormat("#,###,###,###").format(model.getAmount()));
+        viewHolder.amountText.setText(formatAmount(model.getAmount()));
         CharSequence time = DateUtils.getRelativeDateTimeString(context,model.getTimeCreated(),
                 DateUtils.SECOND_IN_MILLIS,DateUtils.DAY_IN_MILLIS,DateUtils.FORMAT_ABBREV_ALL);
         viewHolder.date.setText(time);
@@ -40,7 +40,7 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
 
 
         if (model.isIsIncome()){
-            viewHolder.amountText.setText(" +N"+ new DecimalFormat("#,###,###,###").format(model.getAmount()));
+            viewHolder.amountText.setText(" +N"+ formatAmount(model.getAmount()));
 
             viewHolder.amountText.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
 
@@ -50,7 +50,7 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
             Circle.setColor(Color);
         }
         else {
-            viewHolder.amountText.setText("- N"+ new DecimalFormat("#,###,###,###").format(model.getAmount()));
+            viewHolder.amountText.setText("- N"+ formatAmount(model.getAmount()));
             viewHolder.amountText.setTextColor(ContextCompat.getColor(context,R.color.dot_dark_screen1));
 
             GradientDrawable Circle = (GradientDrawable) viewHolder.symbol.getBackground();

@@ -24,6 +24,8 @@ public class App extends Application {
     public static DatabaseReference thisMonthExpenseRef;
     public static DatabaseReference transactionReference;
 
+    public static DatabaseReference expendableAmtRef;
+
     private Calendar calendar = Calendar.getInstance();
 
     @Override
@@ -45,6 +47,7 @@ public class App extends Application {
         accountBalanceRef = userRef.child(Constants.ACCOUNT_TOTAL);
         todayExpenseRef = userRef.child(Constants.NODE_EXPENDITURE_TODAY);
         thisMonthExpenseRef = userRef.child(Constants.NODE_EXPENDITURE_THIS_MONTH);
+        expendableAmtRef = userRef.child(Constants.NODE_EXPENDABLE);
     }
 
 
