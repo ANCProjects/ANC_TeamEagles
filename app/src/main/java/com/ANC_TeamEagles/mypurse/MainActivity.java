@@ -368,10 +368,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String month = calendar.getDisplayName(Calendar.MONTH,Calendar.LONG, Locale
                         .ENGLISH);
 
-                if (!TextUtils.isDigitsOnly(amount))
+                Log.e(TAG," amount to add = "+amount);
+                if (!TextUtils.isDigitsOnly(amount)){
+                    Log.e(TAG," not digits = "+amount);
                     amtText.setError("Only numbers are allowed");
-                else if (!TextUtils.isEmpty(desc))
+                }
+
+                else if (TextUtils.isEmpty(desc)){
+                    Log.e(TAG," empty = "+amount);
                     transacDetails.setError("Cannot be empty");
+                }
+
                 else {
                     Double transacAmt = Double.valueOf(amount);
 
