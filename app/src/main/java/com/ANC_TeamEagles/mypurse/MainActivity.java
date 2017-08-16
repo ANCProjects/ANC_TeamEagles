@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -30,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ANC_TeamEagles.mypurse.pojo.TransactionItem;
+import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.ANC_TeamEagles.mypurse.utils.PrefManager;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -219,6 +221,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     showNotification("You have exhausted your expendable amount");
 
                 }
+                else if (expendableAmtLeft <= 2000 && !isNotificationSent)
+                    showNotification(getString(R.string.notification_low_amt,expendableAmtLeft));
 
             }
 
@@ -357,6 +361,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         alert.setPositiveButton(R.string.addBalance, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id)
             {
+                resetDailyValues();
                 String amount = amtText.getText().toString();
                 String desc = transacDetails.getText().toString();
                 boolean isIncome = view.getId() == R.id.fab_add;
@@ -390,6 +395,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             displayMessageToUser("Expendable amount is exhausted\n set an amount");
                         }
                         else {
+
                             currentAccountBalance -= transacAmt;
                             weeklyTransactionRef.child(day).setValue(previousTodayTotal + transacAmt);
                             monthlyTransactionReference.child(month).setValue(previousThisMonthTotal +
@@ -655,6 +661,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(notificationID,notification);
         isNotificationSent = true;
+    }
+
+    public void resetDailyValues(){
+        String day = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(Constants.TODAY,"noday");
+
+        String actualDay = calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG,Locale.ENGLISH);
+
+        if (!day.equalsIgnoreCase(actualDay)){
+            //reset all daily values
+            previousTodayTotal = 0;
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit().putString(Constants.TODAY,actualDay)
+                    .apply();
+        }
     }
 
 

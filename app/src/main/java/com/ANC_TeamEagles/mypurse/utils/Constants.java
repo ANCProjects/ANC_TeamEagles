@@ -17,4 +17,6 @@ public class Constants {
     public static final String QUERY_INCOME = "isIncome";
     public static final String NODE_EXPENDABLE = "expendable amount";
 
+    public static final String TODAY = "todaydate";
+
 }

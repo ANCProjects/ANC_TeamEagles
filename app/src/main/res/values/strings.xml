@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">myPurse</string>
     <string name="startBal">Allowance</string>
     <string name="expendable_amt">Expendable Amount</string>
@@ -32,4 +32,6 @@
     <string name="transaction_history">Transaction history</string>
     <string name="reset">Reset account</string>
     <string name="expenditure_trend">Expenditure trend</string>
+    <string name="notification_low_amt">Your expendable amount is low: &#8358;
+        <xliff:g id ="amount" example="100">%d</xliff:g></string>
 </resources>
