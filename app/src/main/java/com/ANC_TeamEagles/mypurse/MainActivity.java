@@ -377,11 +377,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (!TextUtils.isDigitsOnly(amount)){
                     Log.e(TAG," not digits = "+amount);
                     amtText.setError("Only numbers are allowed");
+                    return;
                 }
 
                 else if (TextUtils.isEmpty(desc)){
                     Log.e(TAG," empty = "+amount);
                     transacDetails.setError("Cannot be empty");
+                    return;
                 }
 
                 else {
@@ -393,6 +395,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     else{
                         if (expendableAmtLeft <= 0){
                             displayMessageToUser("Expendable amount is exhausted\n set an amount");
+                            return;
                         }
                         else {
 
