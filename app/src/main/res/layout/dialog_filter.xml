@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+
+    <ImageView
+            android:id="@+id/myImageView"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/colorPrimary"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_purse"
+
+    />
+
+    <RadioGroup android:layout_width="wrap_content"
+                android:id="@+id/rg_filter"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:layout_height="wrap_content">
+
+        <RadioButton
+                android:id="@+id/rb_all"
+                android:text="Show all"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <RadioButton
+                android:id="@+id/rb_income"
+                android:text="show only Income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <RadioButton
+                android:id="@+id/rb_expenditure"
+                android:text="show only expenses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </RadioGroup>
+
+</LinearLayout>

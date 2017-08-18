@@ -45,6 +45,7 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
             viewHolder.amountText.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
 
 
+
             GradientDrawable Circle = (GradientDrawable) viewHolder.symbol.getBackground();
             int Color = ContextCompat.getColor(context, R.color.colorPrimary);
             Circle.setColor(Color);
@@ -57,6 +58,8 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
             int Color = ContextCompat.getColor(context, R.color.dot_dark_screen1);
             Circle.setColor(Color);
 
+
+
         }
 
     }
@@ -68,13 +71,15 @@ public class TransactionAdapter extends FirebaseRecyclerAdapter<TransactionItem,
         TextView date;
 
 
+
+
         public TransactionHolder(View itemView) {
             super(itemView);
             date = (TextView) itemView.findViewById(R.id.captureDate);
             amountText = (TextView)itemView.findViewById(R.id.amt_item);
             descText = (TextView)itemView.findViewById(R.id.tv_desc_item);
             symbol = (TextView)itemView.findViewById(R.id.descriptionSymbol);
+
         }
     }
-
 }

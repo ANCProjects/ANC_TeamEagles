@@ -16,7 +16,13 @@ public class Constants {
     public static final String NODE_EXPENDITURE_THIS_MONTH = "expenditure this month";
     public static final String QUERY_INCOME = "isIncome";
     public static final String NODE_EXPENDABLE = "expendable amount";
+    public static final String NODE_TO_BUY = "scale of preference";
 
     public static final String TODAY = "todaydate";
+
+    //for transaction filter
+    public static final String KEY_FILTER = "folder";
+
+
 
 }
