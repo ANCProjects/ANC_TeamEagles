@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.IdRes;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -27,10 +28,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ANC_TeamEagles.mypurse.pojo.TransactionItem;
+import com.ANC_TeamEagles.mypurse.toBuy.ToBuyFragment;
 import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.ANC_TeamEagles.mypurse.utils.PrefManager;
 import com.firebase.ui.auth.AuthUI;
@@ -74,6 +78,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ValueEventListener thisMonthExpenseListener;
     private ValueEventListener expendableAmountListener;
 
+    private static OverviewFragment overviewFragment;
+    private static ChartsFragment chartsFragment;
+
+    public static MainActivity instance;
+
 
 
     private FirebaseAuth auth;
@@ -99,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static double previousTodayTotal = 0;
     private static double previousThisMonthTotal = 0;
-    private static double expendableAmtLeft = 0;
+    public static double expendableAmtLeft = 0;
     private static double currentAccountBalance = 0;
 
     private View navHeaderView;
@@ -110,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawerlayout);
         ButterKnife.bind(this);
+        instance = this;
 
 
 
@@ -222,7 +232,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
                 else if (expendableAmtLeft <= 2000 && !isNotificationSent)
-                    showNotification(getString(R.string.notification_low_amt,expendableAmtLeft));
+                    showNotification(getString(R.string.notification_low_amt,
+                            ""+expendableAmtLeft));
 
             }
 
@@ -285,7 +296,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemThatWasClickedId = item.getItemId();
-        if (itemThatWasClickedId == R.id.notifications) {
+        if (itemThatWasClickedId == R.id.filter) {
+            createFilterDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -353,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         alert.setView(dialogView);
 
         final EditText amtText = (EditText) dialogView.findViewById(R.id.transac_amt);
-        //amtText.addTextChangedListener(new NumberTextWatcherForThousand(amtText));
+
 
         final EditText transacDetails = (EditText)  dialogView.findViewById(R.id.transac_desc);
 
@@ -438,10 +450,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setupViewPager(ViewPager viewpager) {
 
         SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new IncomeFragment());
-        adapter.addFragment(new OverviewFragment());
-        adapter.addFragment(new ChartsFragment());
-        adapter.addFragment(new ExpenditureFragment());
+        overviewFragment = new OverviewFragment();
+        chartsFragment = new ChartsFragment();
+        adapter.addFragment(overviewFragment);
+        adapter.addFragment(chartsFragment);
+        adapter.addFragment(new ToBuyFragment());
         viewPager.setAdapter(adapter);
     }
 
@@ -455,23 +468,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
               switch (item.getItemId()) {
 
-                  case R.id.income: {
+                  case R.id.overview: {
                       viewPager.setCurrentItem(0);
                       break;
                   }
-                  case R.id.overview: {
+                  case R.id.charts: {
                       viewPager.setCurrentItem(1);
                       break;
                   }
-                  case R.id.charts: {
+                  case R.id.tobuy:
                       viewPager.setCurrentItem(2);
                       break;
-                  }
-                  case R.id.expenditure: {
-                      viewPager.setCurrentItem(3);
-                      break;
-
-                  }
 
 
               }
@@ -514,9 +521,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_overview) {
-            viewPager.setCurrentItem(1);
+            viewPager.setCurrentItem(0);
         } else if (id == R.id.nav_chart) {
-            viewPager.setCurrentItem(2);
+            viewPager.setCurrentItem(1);
 
         } else if (id == R.id.nav_reset) {
             clearUserData();
@@ -644,7 +651,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .show();
     }
 
-    private void showNotification(String message){
+    public void showNotification(String message){
 
         final int notificationID = 102;
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
@@ -679,6 +686,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .edit().putString(Constants.TODAY,actualDay)
                     .apply();
         }
+    }
+
+    public void setLowAmountColour(TextView view){
+        view.setTextColor(getResources().getColor(R.color.low_amount));
+    }
+
+    public void createFilterDialog(){
+
+        final View view = LayoutInflater.from(this).inflate(R.layout.dialog_filter,null,false);
+        RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.rg_filter);
+        RadioButton rbIncome = (RadioButton) view.findViewById(R.id.rb_income);
+        RadioButton rbExpense = (RadioButton) view.findViewById(R.id.rb_expenditure);
+        RadioButton rbBoth = (RadioButton) view.findViewById(R.id.rb_all);
+
+        final AlertDialog filterDilaog = new AlertDialog.Builder(this)
+                .setView(view)
+                .setCancelable(true)
+                .show();
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+
+                switch (radioGroup.getCheckedRadioButtonId()){
+                    case R.id.rb_all:
+                        overviewFragment.filterTransactions(0);
+                        break;
+                    case R.id.rb_income:
+                        overviewFragment.filterTransactions(1);
+                        break;
+                    case R.id.rb_expenditure:
+                        overviewFragment.filterTransactions(2);
+                        break;
+                }
+            }
+        });
+        int key = PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants
+                .KEY_FILTER,0);
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (filterDilaog.isShowing())
+                filterDilaog.dismiss();
+            }
+        };
+
+        rbBoth.setOnClickListener(listener);
+        rbExpense.setOnClickListener(listener);
+        rbIncome.setOnClickListener(listener);
+
+        switch (key){
+            case 0:
+                rbBoth.setChecked(true);
+                break;
+            case 1:
+                rbIncome.setChecked(true);
+                break;
+            case 2:
+                rbExpense.setChecked(true);
+                break;
+        }
+
     }
 
 

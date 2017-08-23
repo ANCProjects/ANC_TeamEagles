@@ -2,6 +2,7 @@ package com.ANC_TeamEagles.mypurse;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ANC_TeamEagles.mypurse.utils.PrefManager;
-import com.google.firebase.database.DatabaseReference;
+import com.ANC_TeamEagles.mypurse.utils.Constants;
+import com.google.firebase.database.Query;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,12 +20,11 @@ import butterknife.ButterKnife;
 
 public class OverviewFragment extends Fragment {
 
-    private DatabaseReference reference;
-    private PrefManager manager;
+    private Query reference;
     private TransactionAdapter adapter;
 
     @BindView(R.id.rv_transactions)
-    RecyclerView transactionRecycler;
+     RecyclerView transactionRecycler;
 
     public OverviewFragment() {
 
@@ -40,20 +40,19 @@ public class OverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        manager = new PrefManager(getActivity());
-        reference = App.transactionReference;
+
         View view = inflater.inflate(R.layout.overview_fragment, container, false);
-        final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-
-
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         ButterKnife.bind(this,view);
 
-        adapter = new TransactionAdapter(getActivity(),reference);
-        transactionRecycler.setLayoutManager(manager);
-        transactionRecycler.setAdapter(adapter);
+        int key = PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getInt(Constants.KEY_FILTER,0);
+
+        transactionRecycler.setLayoutManager(linearLayoutManager);
         transactionRecycler.addItemDecoration(new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL));
 
+        filterTransactions(key);
 
         return view;
     }
@@ -74,6 +73,24 @@ public class OverviewFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
 
+    }
+
+    public void filterTransactions(int value){
+
+
+        if (value == 0)
+            reference = App.transactionReference;
+        else if (value == 1)
+            reference = App.transactionReference.orderByChild(Constants.QUERY_INCOME).equalTo(true);
+        else
+            reference = App.transactionReference.orderByChild(Constants.QUERY_INCOME).equalTo(false);
+
+        adapter = new TransactionAdapter(getActivity(),reference);
+        transactionRecycler.setAdapter(adapter);
+
+        PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .edit()
+                .putInt(Constants.KEY_FILTER,value).apply();
     }
 
 

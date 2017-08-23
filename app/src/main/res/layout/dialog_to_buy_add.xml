@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <EditText
+            android:id="@+id/buy_name"
+            android:inputType="text"
+            android:layout_marginBottom="5dp"
+            android:hint="@string/item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <EditText
+            android:id="@+id/buy_price"
+            android:inputType="number"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <EditText
+            android:id="@+id/buy_priority"
+            android:hint="item priority"
+            android:inputType="number"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <EditText
+            android:id="@+id/buy_condition"
+            android:hint="@string/condition_buy"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"/>
+
+</LinearLayout>

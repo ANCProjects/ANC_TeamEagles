@@ -11,7 +11,8 @@
     <string name="start">GOT IT</string>
 
     <string name="slide_1_title">Welcome to MyPurse!</string>
-    <string name="slide_1_desc">Ever received money and Often wondered what you spent it on?</string>
+    <string name="slide_1_desc">Ever received money and Often wondered what you spent it on?
+    </string>
 
     <string name="slide_2_title">Income</string>
     <string name="slide_2_desc">With myPurse you get to track all your incomes!</string>
@@ -33,5 +34,14 @@
     <string name="reset">Reset account</string>
     <string name="expenditure_trend">Expenditure trend</string>
     <string name="notification_low_amt">Your expendable amount is low: &#8358;
-        <xliff:g id ="amount" example="100">%d</xliff:g></string>
+        <xliff:g example="100" id="amount">%s</xliff:g>
+    </string>
+
+
+    <string name="to_buy_price">&#8358; <xliff:g example="20" id="amount">%s</xliff:g></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="item_name">item name</string>
+    <string name="condition_buy">when account balance is at least?</string>
+    <string name="to_buy">To buy</string>
 </resources>

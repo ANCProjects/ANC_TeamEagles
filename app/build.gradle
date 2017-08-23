@@ -28,11 +28,15 @@ dependencies {
 //    tests
 
     //    graph
-    
 
     //    firebase
-    
+
     //    fabMenu
+    
+
+    //image loading
+    
+
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -45,14 +49,12 @@ dependencies {
     compile 'com.firebaseui:firebase-ui:1.0.1'
     compile 'com.google.android.gms:play-services-auth:10.0.1'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
-    testCompile 'junit:junit:4.12'
-
-    //image loading
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-
+    testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
 }
+
 
 
 

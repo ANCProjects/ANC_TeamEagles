@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Notifications"
-        android:id="@+id/notifications"
+        android:title="Filter"
+        android:id="@+id/filter"
         app:showAsAction="always"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_notifications">
+        android:icon="@drawable/ic_filter_list_black_24dp">
 
     </item>
 

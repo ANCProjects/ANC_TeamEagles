@@ -1,27 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/income"
-        android:icon="@drawable/ic_income"
-        android:title="Income"
-        ></item>
+
     <item
         android:id="@+id/overview"
         android:icon="@drawable/ic_overview"
-        android:title="Overview"
-        ></item>
+        android:title="Overview"/>
     <item
         android:id="@+id/charts"
         android:icon="@drawable/ic_charts"
-        android:title="Charts"
-        ></item>
+        android:title="Charts" />
 
-    <item
-        android:id="@+id/expenditure"
-        android:icon="@drawable/ic_expenditure"
-        android:title="Expenditure"
-        ></item>
-
+    <item android:id="@+id/tobuy"
+          android:icon="@drawable/ic_money_bag_black"
+          android:title="@string/to_buy"
+    />
 
 </menu>
