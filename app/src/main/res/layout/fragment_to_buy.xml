@@ -4,7 +4,10 @@
              android:layout_height="match_parent"
              android:background="#e0e0e0"
              xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:padding="@dimen/activity_horizontal_margin"
+             android:paddingRight="@dimen/activity_horizontal_margin"
+             android:paddingLeft="@dimen/activity_horizontal_margin"
+             android:paddingTop="@dimen/activity_horizontal_margin"
+             android:paddingBottom="0dp"
              tools:context="com.ANC_TeamEagles.mypurse.toBuy.ToBuyFragment">
 
     <android.support.v7.widget.RecyclerView
@@ -20,6 +23,8 @@
             android:src="@drawable/ic_add_shopping_cart_black_24dp"
             android:layout_gravity="bottom|end"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+            android:layout_marginBottom="16dp"/>
 
 </FrameLayout>
