@@ -23,6 +23,12 @@ public class Constants {
     //for transaction filter
     public static final String KEY_FILTER = "folder";
 
+    //fragment keys for notification
+    public static final String WHICH_FRAG = "fragToSelect";
+    public static final String FRAG_OVERVIEW = "overview";
+    public static final String FRAG_CHART = "charts";
+    public static final String FRAG_TO_BUY = "toBuy";
+
 
 
 }

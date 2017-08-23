@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ANC_TeamEagles.mypurse.App;
 import com.ANC_TeamEagles.mypurse.MainActivity;
 import com.ANC_TeamEagles.mypurse.R;
 import com.ANC_TeamEagles.mypurse.pojo.ToBuy;
+import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
 
@@ -36,9 +38,11 @@ public class ToBuyAdapter extends FirebaseRecyclerAdapter<ToBuy,ToBuyAdapter.ToB
         viewHolder.itemCondition.setText(context.getString(R.string.to_buy_price,
                 ""+model.getWhenToBuy()));
 
-        if (MainActivity.expendableAmtLeft >= model.getWhenToBuy()){
+        if (MainActivity.expendableAmtLeft >= model.getWhenToBuy()
+                && !App.isToBuyNotificationClicked){
             MainActivity.instance.showNotification("You can now buy "+model.getItemName()
-                    +"\nYou have more than "+model.getWhenToBuy());
+                    +"\nYou have more than "+model.getWhenToBuy(), Constants.FRAG_TO_BUY);
+            App.isToBuyNotificationClicked = true;
         }
 
     }

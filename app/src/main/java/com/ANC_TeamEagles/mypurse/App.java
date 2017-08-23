@@ -27,6 +27,8 @@ public class App extends Application {
 
     public static DatabaseReference expendableAmtRef;
 
+    public static boolean isToBuyNotificationClicked;
+
     private Calendar calendar = Calendar.getInstance();
 
     @Override
@@ -37,6 +39,7 @@ public class App extends Application {
         PrefManager manager = new PrefManager(this);
         userRef = appDatabase.getReference().child(manager.getUserEmail());
         setUpDbReferences();
+        isToBuyNotificationClicked =false;
     }
 
     private void setUpDbReferences(){

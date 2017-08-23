@@ -135,6 +135,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupFirebaseAuth();
 
+        if (getIntent().hasExtra(Constants.WHICH_FRAG)){
+            String frag = getIntent().getStringExtra(Constants.WHICH_FRAG);
+
+            switch (frag){
+                case Constants.FRAG_OVERVIEW:
+                    viewPager.setCurrentItem(0);
+                    break;
+                case Constants.FRAG_CHART:
+                    viewPager.setCurrentItem(1);
+                    break;
+
+                case Constants.FRAG_TO_BUY:
+                    viewPager.setCurrentItem(2);
+                    break;
+            }
+        }
+
     }
 
     public void setupFirebaseAuth(){
@@ -228,12 +245,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 addBal.setText(formatAmount(currentAccountBalance));
                 if (expendableAmtLeft == 0 && !isNotificationSent){
                     //send notification
-                    showNotification("You have exhausted your expendable amount");
+                    showNotification("You have exhausted your expendable amount", Constants.FRAG_OVERVIEW);
 
                 }
                 else if (expendableAmtLeft <= 2000 && !isNotificationSent)
                     showNotification(getString(R.string.notification_low_amt,
-                            ""+expendableAmtLeft));
+                            ""+expendableAmtLeft), Constants.FRAG_OVERVIEW);
 
             }
 
@@ -407,6 +424,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     else{
                         if (expendableAmtLeft <= 0){
                             displayMessageToUser("Expendable amount is exhausted\n set an amount");
+                            return;
+                        }
+                        else if (expendableAmtLeft < transacAmt){
+                            displayMessageToUser("Entered amount "+transacAmt+" is more than the " +
+                                    "expendable amount");
                             return;
                         }
                         else {
@@ -651,10 +673,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .show();
     }
 
-    public void showNotification(String message){
+    public void showNotification(String message, String whichFragment){
 
         final int notificationID = 102;
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        mainActivityIntent.putExtra(Constants.WHICH_FRAG,whichFragment);
         PendingIntent pendingIntent = PendingIntent
                 .getActivity(this,0,mainActivityIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
