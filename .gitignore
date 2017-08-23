@@ -1,1 +1,13 @@
 # Created by .ignore support plugin (hsz.mobi)
+*idea
+*rawproto
+*iml
+*artifacts
+*mockable
+local.properties
+build/generated/mockable-android-25.jar
+build/intermediates/dex-cache/cache.xml
+app/gradle/wrapper/gradle-wrapper.jar
+app/gradle/wrapper/gradle-wrapper.properties
+app/gradlew
+app/gradlew.bat

@@ -85,6 +85,36 @@
                 android:layout_alignBottom="@id/ib_tobuy_condition"
                 android:layout_marginStart="@dimen/inter_view_margin"
                 android:layout_height="wrap_content"/>
+        <ImageButton
+            android:id="@+id/ib_tobuy_delete"
+            android:src="@drawable/ic_delete"
+            android:layout_below="@+id/ib_tobuy_condition"
+            android:tint="@color/colorAccent"
+            android:layout_marginTop="@dimen/little_margin"
+            android:layout_width="42dp"
+            android:layout_height="37dp"/>
+
+        <TextView
+            android:id="@+id/tv_tobuy_delete"
+            android:layout_width="wrap_content"
+            android:layout_alignStart="@+id/tv_tobuy_name"
+            android:layout_alignTop="@id/ib_tobuy_delete"
+            android:textSize="@dimen/normal_text_size"
+            android:gravity="center_vertical"
+            android:text="Delete Item"
+            android:layout_alignBottom="@id/ib_tobuy_delete"
+            android:layout_marginStart="@dimen/inter_view_margin"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_tobuy_delete"
+            android:layout_marginStart="14dp"
+            android:text="Bought"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/little_margin"/>
 
     </RelativeLayout>
 
