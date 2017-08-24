@@ -15,7 +15,7 @@ import java.util.Calendar;
 
 public class App extends Application {
 
-    private FirebaseDatabase appDatabase;
+    private static FirebaseDatabase appDatabase;
     public static DatabaseReference userRef;
     public static DatabaseReference monthlyTransactionReference;
     public static DatabaseReference weeklyTransactionRef;
@@ -28,21 +28,22 @@ public class App extends Application {
     public static DatabaseReference expendableAmtRef;
 
     public static boolean isToBuyNotificationClicked;
+    private static PrefManager manager;
 
-    private Calendar calendar = Calendar.getInstance();
+    private static Calendar calendar = Calendar.getInstance();
 
     @Override
     public void onCreate() {
         super.onCreate();
         appDatabase = FirebaseDatabase.getInstance();
         appDatabase.setPersistenceEnabled(true);
-        PrefManager manager = new PrefManager(this);
+        manager = new PrefManager(this);
         userRef = appDatabase.getReference().child(manager.getUserEmail());
         setUpDbReferences();
         isToBuyNotificationClicked =false;
     }
 
-    private void setUpDbReferences(){
+    private static void setUpDbReferences(){
         transactionReference = userRef.child(Constants.NODE_TRANSACTION);
         monthlyTransactionReference = userRef.child(Constants.NODE_MONTHLY);
         String week_year = "Week"+calendar.get(Calendar.WEEK_OF_YEAR)+"_Year"+calendar.get(Calendar
@@ -54,6 +55,14 @@ public class App extends Application {
         expendableAmtRef = userRef.child(Constants.NODE_EXPENDABLE);
 
         toBuyRef = userRef.child(Constants.NODE_TO_BUY);
+    }
+
+    public static void configureDatabaseForUser(MainActivity activity){
+        userRef = appDatabase.getReference().child(manager.getUserEmail());
+        setUpDbReferences();
+
+        activity.detachFirebaseListeners();
+        activity.attachFirebaseListeners();
     }
 
 

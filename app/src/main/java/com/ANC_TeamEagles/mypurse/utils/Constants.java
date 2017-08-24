@@ -7,6 +7,8 @@ package com.ANC_TeamEagles.mypurse.utils;
 public class Constants {
 
     public static final String KEY_EMAIL = "user_email";
+    public static final String DEFAULT_EMAIL = "anonymous";
+
     public static final String NODE_TRANSACTION = "transactions";
     public static final String NODE_MONTHLY = "monthly data";
     public static final String NODE_DAY = "daily total";

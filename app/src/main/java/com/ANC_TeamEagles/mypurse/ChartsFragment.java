@@ -2,6 +2,7 @@ package com.ANC_TeamEagles.mypurse;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,6 +67,8 @@ public class ChartsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view =inflater.inflate(R.layout.charts_fragment, container, false);
+        unbinder = ButterKnife.bind(this,view);
         xAxisData = new ArrayList<>();
         xAxisData.add("monday");
         xAxisData.add("tuesday");
@@ -75,14 +78,17 @@ public class ChartsFragment extends Fragment {
         xAxisData.add("saturday");
         xAxisData.add("sunday");
 
+
         yAxisData = new HashMap<>();
 
-        setUpFirebaseVariables();
-
-        View view =inflater.inflate(R.layout.charts_fragment, container, false);
-        unbinder = ButterKnife.bind(this,view);
-
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setUpFirebaseVariables();
     }
 
     public void setUpFirebaseVariables(){
@@ -154,17 +160,23 @@ public class ChartsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        attachFirebaseListeners();
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        attachFirebaseListeners();
     }
 
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
         detachFirebaseListeners();
     }
 
@@ -188,10 +200,12 @@ public class ChartsFragment extends Fragment {
 
         BarDataSet dataSet = new BarDataSet(barEntries, "Expenditure summary");
         BarData data = new BarData(dataSet);
-        barChart.setData(data);
-        XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
-        barChart.invalidate();
+        if (barChart != null){
+            barChart.setData(data);
+            XAxis xAxis = barChart.getXAxis();
+            xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
+            barChart.invalidate();
+        }
     }
 
 

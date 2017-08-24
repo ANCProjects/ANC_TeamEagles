@@ -5,8 +5,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.IdRes;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -83,6 +86,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static MainActivity instance;
 
+    private AlertDialog networkDialog;
+
+
+    private IntentFilter filter = new IntentFilter();
+    private NetworkChecker networkChecker;
 
 
     private FirebaseAuth auth;
@@ -114,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private View navHeaderView;
     private Calendar calendar = Calendar.getInstance();
 
+    private static SectionPagerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.body);
-        setupViewPager(viewPager);
+        setupViewPager();
         setupBottomView();
 
 
@@ -152,7 +162,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+
+         networkChecker = new NetworkChecker(this);
+
     }
+
+
 
     public void setupFirebaseAuth(){
         auth = FirebaseAuth.getInstance();
@@ -172,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                             AuthUI.EMAIL_PROVIDER,
                                             AuthUI.GOOGLE_PROVIDER)
                                     .setTheme(R.style.LoginTheme)
-                                    .setIsSmartLockEnabled(!BuildConfig.DEBUG)
+                                    .setIsSmartLockEnabled(false)
                                     .setLogo(R.drawable.logo)
                                     .build(),
                             rcSignIn);
@@ -180,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 else {
                     //logged in
 
-                    manager.saveUserEmail(user.getEmail());
+
                     setUserCredentials(user);
 
 
@@ -188,6 +204,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        registerReceiver(networkChecker,filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChecker);
     }
 
     private void setUpFirebaseListeners() {
@@ -246,11 +275,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (expendableAmtLeft == 0 && !isNotificationSent){
                     //send notification
                     showNotification("You have exhausted your expendable amount", Constants.FRAG_OVERVIEW);
+                    expendableAmtTextView.setTextColor(getResources().getColor(R.color.low_amount));
 
                 }
-                else if (expendableAmtLeft <= 2000 && !isNotificationSent)
-                    showNotification(getString(R.string.notification_low_amt,
-                            ""+expendableAmtLeft), Constants.FRAG_OVERVIEW);
+                else if (expendableAmtLeft <= 2000){
+                    expendableAmtTextView.setTextColor(getResources().getColor(R.color.low_amount));
+                    if(!isNotificationSent){
+                        showNotification(getString(R.string.notification_low_amt,
+                                ""+expendableAmtLeft), Constants.FRAG_OVERVIEW);
+                    }
+                }
+                else {
+                    expendableAmtTextView.setTextColor(getResources().getColor(R.color.amount));
+                }
+
+
 
             }
 
@@ -469,9 +508,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         alert.show();
     }
-    private void setupViewPager(ViewPager viewpager) {
+    private void setupViewPager() {
 
-        SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
+        adapter = new SectionPagerAdapter(getSupportFragmentManager());
         overviewFragment = new OverviewFragment();
         chartsFragment = new ChartsFragment();
         adapter.addFragment(overviewFragment);
@@ -559,16 +598,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_signout) {
             AuthUI.getInstance().signOut(this);
             Toast.makeText(getApplicationContext(), "Succesfully signed out", Toast.LENGTH_SHORT).show();
-            startActivityForResult(AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setIsSmartLockEnabled(false)
-                            .setProviders(
-                                    AuthUI.EMAIL_PROVIDER,
-                                    AuthUI.GOOGLE_PROVIDER)
-                            .setTheme(R.style.LoginTheme)
-                            .setLogo(R.drawable.logo)
-                            .build(),
-                    rcSignIn);
+            manager.saveUserEmail(Constants.DEFAULT_EMAIL);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -639,6 +669,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
                 .into(userProfile);
+
+        manager.saveUserEmail(email);
+        App.configureDatabaseForUser(this);
+        setupViewPager();
+
+
 
 
     }
@@ -711,9 +747,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void setLowAmountColour(TextView view){
-        view.setTextColor(getResources().getColor(R.color.low_amount));
-    }
+
 
     public void createFilterDialog(){
 
@@ -772,6 +806,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
 
+    }
+
+    public void showNoConntectivityDialog(){
+        networkDialog = new AlertDialog.Builder(this)
+                .setMessage("You are offline.")
+                .setPositiveButton("Enable network", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
+                        startActivity(settingsIntent);
+                    }
+                })
+                .setCancelable(false)
+                .create();
+        networkDialog.setCanceledOnTouchOutside(false);
+        networkDialog.show();
+    }
+
+    public void hideNoConnectivityDialog(){
+
+        if (networkDialog != null && networkDialog.isShowing())
+            networkDialog.dismiss();
     }
 
 
