@@ -88,7 +88,7 @@ public class OverviewFragment extends Fragment {
         adapter = new TransactionAdapter(getActivity(),reference);
         transactionRecycler.setAdapter(adapter);
 
-        PreferenceManager.getDefaultSharedPreferences(getActivity())
+        PreferenceManager.getDefaultSharedPreferences(MainActivity.instance)
                 .edit()
                 .putInt(Constants.KEY_FILTER,value).apply();
     }

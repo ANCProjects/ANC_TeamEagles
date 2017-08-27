@@ -44,4 +44,11 @@
     <string name="item_name">item name</string>
     <string name="condition_buy">when account balance is at least?</string>
     <string name="to_buy">To buy</string>
+    <string name="priority">Priority</string>
+
+    <string-array name="priority_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

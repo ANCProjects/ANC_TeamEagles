@@ -1,9 +1,15 @@
 package com.ANC_TeamEagles.mypurse.toBuy;
 
-import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ANC_TeamEagles.mypurse.App;
 import com.ANC_TeamEagles.mypurse.MainActivity;
@@ -11,6 +17,8 @@ import com.ANC_TeamEagles.mypurse.R;
 import com.ANC_TeamEagles.mypurse.pojo.ToBuy;
 import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 import butterknife.BindView;
@@ -22,20 +30,39 @@ import butterknife.ButterKnife;
 
 public class ToBuyAdapter extends FirebaseRecyclerAdapter<ToBuy,ToBuyAdapter.ToBuyHolder> {
 
-    private Context context;
-    public ToBuyAdapter(Context context, Query ref) {
+    private AppCompatActivity activity;
+    public ToBuyAdapter(AppCompatActivity activity, Query ref) {
         super(ToBuy.class, R.layout.layout_tobuy_item, ToBuyHolder.class, ref);
-        this.context = context;
+        this.activity = activity;
     }
 
     @Override
-    protected void populateViewHolder(ToBuyHolder viewHolder, ToBuy model, int position) {
+    protected void populateViewHolder(ToBuyHolder viewHolder, final ToBuy model, final int position) {
 
         viewHolder.itemName.setText(model.getItemName());
-        viewHolder.itemPrice.setText(context.getString(R.string.to_buy_price,
+        viewHolder.itemPrice.setText(activity.getString(R.string.to_buy_price,
                 ""+model.getPrice()));
-        viewHolder.itemPriority.setText(String.valueOf(model.getPriority()));
-        viewHolder.itemCondition.setText(context.getString(R.string.to_buy_price,
+
+        if (model.getPriority() == 1)
+            viewHolder.cardView.setBackgroundDrawable(activity.getResources()
+                    .getDrawable(R.drawable.activatedbackground_red));
+        else if (model.getPriority() == 2)
+            viewHolder.cardView.setBackgroundDrawable(activity.getResources()
+                    .getDrawable(R.drawable.activatedbackground_orange));
+        else
+            viewHolder.cardView.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable
+                    .activatedbackground_white));
+
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                view.setActivated(true);
+                setUpTobuyActionMode(view, position, model);
+                return true;
+            }
+        });
+
+        viewHolder.itemCondition.setText(activity.getString(R.string.to_buy_price,
                 ""+model.getWhenToBuy()));
 
         if (MainActivity.expendableAmtLeft >= model.getWhenToBuy()
@@ -53,15 +80,85 @@ public class ToBuyAdapter extends FirebaseRecyclerAdapter<ToBuy,ToBuyAdapter.ToB
         TextView itemName;
         @BindView(R.id.tv_tobuy_price)
         TextView itemPrice;
-        @BindView(R.id.tv_tobuy_prority)
-        TextView itemPriority;
         @BindView(R.id.tv_tobuy_condition)
         TextView itemCondition;
+
+        @BindView(R.id.card_tobuy)
+        CardView cardView;
 
         public ToBuyHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
 
         }
+
+
+    }
+
+    private void setUpTobuyActionMode(final View view, final int position, final ToBuy toBuy){
+        ActionMode.Callback callback = new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                MenuInflater menuInflater = mode.getMenuInflater();
+                menuInflater.inflate(R.menu.tobuy_options,menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                MenuItem menuItem = menu.findItem(R.id.tobuy_mark_bought);
+                if (toBuy.isBought())
+                    menuItem.setIcon(R.drawable.ic_unmark_bought);
+                else
+                    menuItem.setIcon(R.drawable.ic_mark_bought_24px);
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
+                DatabaseReference reference;
+                switch (item.getItemId()){
+                    case R.id.tobuy_delete:
+                        reference = getRef(position);
+                        reference.removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                                if (databaseError == null)
+                                    Toast.makeText(activity,"Deleted",Toast.LENGTH_SHORT).show();
+                                notifyDataSetChanged();
+                                mode.finish();
+                                if (view != null)
+                                    view.setActivated(false);
+
+                            }
+                        });
+                        return true;
+
+                    case R.id.tobuy_mark_bought:
+                        reference = getRef(position);
+                        if (toBuy.isBought())
+                            reference.child("bought").setValue(false);
+                        else
+                            reference.child("bought").setValue(true);
+                        notifyDataSetChanged();
+                        mode.finish();
+                        if (view != null)
+                            view.setActivated(false);
+                        return true;
+                    default:
+                        return false;
+                }
+
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                if (view != null)
+                    view.setActivated(false);
+            }
+        };
+
+        activity.startSupportActionMode(callback);
     }
 }

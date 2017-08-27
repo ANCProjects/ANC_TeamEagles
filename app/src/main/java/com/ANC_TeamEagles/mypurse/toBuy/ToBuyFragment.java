@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ANC_TeamEagles.mypurse.App;
@@ -54,7 +57,9 @@ public class ToBuyFragment extends Fragment {
 
         ButterKnife.bind(this,view);
 
-        ToBuyAdapter adapter = new ToBuyAdapter(getActivity(), App.toBuyRef.orderByChild("priority"));
+
+        ToBuyAdapter adapter = new ToBuyAdapter((AppCompatActivity) getActivity(), App.toBuyRef.orderByChild
+                ("priority"));
         recyclerView.setAdapter(adapter);
         return  view;
     }
@@ -66,8 +71,12 @@ public class ToBuyFragment extends Fragment {
                 false);
         final EditText etName = (EditText) view.findViewById(R.id.buy_name);
         final EditText etPrice = (EditText) view.findViewById(R.id.buy_price);
-        final EditText etPriority = (EditText) view.findViewById(R.id.buy_priority);
+        final Spinner etPriority = (Spinner) view.findViewById(R.id.buy_priority);
         final EditText etCondition = (EditText) view.findViewById(R.id.buy_condition);
+        String [] items = getResources().getStringArray(R.array.priority_values);
+
+        etPriority.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout
+                .simple_dropdown_item_1line, items));
 
         new AlertDialog.Builder(getActivity())
                 .setView(view)
@@ -77,7 +86,7 @@ public class ToBuyFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         String name = etName.getText().toString();
                         String price = etPrice.getText().toString();
-                        String priority = etPriority.getText().toString();
+                        String priority = etPriority.getSelectedItem().toString();
                         String condition = etCondition.getText().toString();
 
                         if (!TextUtils.isEmpty(name) && TextUtils.isDigitsOnly(price)
@@ -101,6 +110,7 @@ public class ToBuyFragment extends Fragment {
                                     if (databaseError == null){
                                         Toast.makeText(getActivity()," added!", Toast
                                                 .LENGTH_LONG).show();
+
                                     }
                                 }
                             });
@@ -116,5 +126,7 @@ public class ToBuyFragment extends Fragment {
                     }
                 }).show();
     }
+
+
 
 }
