@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ANC_TeamEagles.mypurse">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -35,6 +35,12 @@
         <receiver android:name=".NetworkChecker"
                   android:exported="false" />
 
+        <activity android:name=".about_us">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.ANC_TeamEagles.mypurse.MainActivity" />
+        </activity>
+
         <receiver android:name=".BankSmsReceiver"
                   android:enabled="true"
                   android:exported="true">
@@ -46,6 +52,7 @@
         <service android:name=".SmsProcessingService"
                  android:exported="true"
                  android:enabled="true"/>
+
     </application>
 
 </manifest>

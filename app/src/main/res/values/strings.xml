@@ -68,4 +68,10 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string name="about_US">The Android Nigeria Community (ANC) brings together a community of android developers to teach,
+        learn and collaborate with each other to provide technological and business solutions to local (Africa) problems
+        in order to enhance productivity and better lives through software development.</string>
+    <string name="contact_us">"Twitter: @androidngr"\n
+        "Meetup: https://www.meetup.com/Android-Nigeria-Meetup\n"
+        "Phone: 07033950328| 08132957589"</string>
 </resources>
