@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.ANC_TeamEagles.mypurse.about_us">
+
+
+    <RelativeLayout
+        android:id="@+id/relLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/relLayoutTopbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/topbar_padding">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/myhometoolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/ToolbarTheme"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:titleTextAppearance="@style/Toolbar.TitleText"
+                    app:titleTextColor="@android:color/white" />
+            </android.support.design.widget.AppBarLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/relLayoutTopbar"
+           >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:src="@drawable/about"
+                            android:scaleType="centerCrop"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="ABOUT US"
+                            android:paddingTop="10dp"
+                            android:textAllCaps="true"
+                            android:textSize="25sp"
+                            android:gravity="left"
+                            android:textStyle="bold"
+                            android:textColor="@color/bg_screen3"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/_20sdp"
+                            android:text="@string/about_US"
+                            android:textSize="17sp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="CONTACT US"
+                            android:paddingTop="10dp"
+                            android:textAllCaps="true"
+                            android:textSize="25sp"
+                            android:gravity="left"
+                            android:textStyle="bold"
+                            android:textColor="@color/bg_screen3"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Twitter: @androidngr"
+                            android:textSize="17sp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="2dp"
+                            android:text="Meetup:  https://www.meetup.com/Android-Nigeria-Meetup"
+                            android:textSize="17sp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="2dp"
+                            android:text="Phone: 07033950328|08132957589"
+                            android:textSize="17sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </ScrollView>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

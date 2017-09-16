@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ANC_TeamEagles.mypurse">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -22,8 +22,15 @@
         </activity>
         <activity android:name=".MainActivity" />
 
-        <receiver android:name=".NetworkChecker"
-                  android:exported="false" />
+        <receiver
+            android:name=".NetworkChecker"
+            android:exported="false" />
+
+        <activity android:name=".about_us">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ANC_TeamEagles.mypurse.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
