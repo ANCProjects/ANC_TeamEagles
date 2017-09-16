@@ -8,6 +8,7 @@
         <item name="colorAccent">#F3CD70</item>
         <item name="android:activatedBackgroundIndicator">@drawable/tobuy_active_background</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
         
         <item name="android:actionMenuTextColor">@android:color/white</item>
         <item name="android:windowActionModeOverlay">true</item>

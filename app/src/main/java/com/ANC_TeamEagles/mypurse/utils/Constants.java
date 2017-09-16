@@ -34,6 +34,7 @@ public class Constants {
 
     public static final String KEY_ACC_BAL_AMT = "amount in acc";
     public static final String KEY_AMOUNT_TO_SPEND = "expendable amount";
+    public static final String KEY_THRESHOLD_AMT = "threshold_key_amt";
     public static final String KEY_MONTH_EXPENSE = "monthly spend";
     public static final String KEY_TODAY_EXPENSE ="today spend";
 

@@ -1,10 +1,8 @@
 package com.ANC_TeamEagles.mypurse;
 
-import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -19,7 +17,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -42,7 +39,6 @@ import android.widget.Toast;
 
 import com.ANC_TeamEagles.mypurse.pojo.TransactionItem;
 import com.ANC_TeamEagles.mypurse.settings.SettingsActivity;
-import com.ANC_TeamEagles.mypurse.settings.SettingsFragment;
 import com.ANC_TeamEagles.mypurse.toBuy.ToBuyFragment;
 import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.ANC_TeamEagles.mypurse.utils.PrefManager;
@@ -147,9 +143,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView
         ButterKnife.bind(this);
         instance = this;
         Log.d(TAG," on create");
-        preferences = getSharedPreferences(
+       /* preferences = getSharedPreferences(
                 SettingsFragment.SETTINGS_SHARED_PREFERENCES_FILE_NAME,
-                Context.MODE_PRIVATE);
+                Context.MODE_PRIVATE);*/
+       preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 
         navigationDrawer();
@@ -301,6 +298,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView
             public void onDataChange(DataSnapshot dataSnapshot) {
                 lowAmt = dataSnapshot.getValue(Double.class) == null? 0 :
                         dataSnapshot.getValue(Double.class);
+
+                PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit()
+                        .putLong(Constants.KEY_THRESHOLD_AMT,(long)lowAmt).apply();
             }
 
             @Override
@@ -423,7 +423,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView
     }
 
 
-    @OnClick({R.id.homeStartBal, R.id.expendable_amt})
+
     final public void launchStartBalanceDialog(final View view){
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
@@ -534,7 +534,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView
                         }
                         else {
 
-                            currentAccountBalance -= transacAmt;
+                            //currentAccountBalance -= transacAmt;
                             weeklyTransactionRef.child(day).setValue(previousTodayTotal + transacAmt);
                             monthlyTransactionReference.child(month).setValue(previousThisMonthTotal +
                                     transacAmt);
@@ -931,7 +931,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView
                 Log.d(TAG," not a number");
             }
             finally {
-                expendableAmtRef.setValue(amt);
+                double diff =0;
+                if (expendableAmtLeft > amt){
+                    //expendable amount reduced
+                    diff = expendableAmtLeft - amt;
+                    expendableAmtLeft = amt;
+
+                    //add difference back to account balance
+                    currentAccountBalance = currentAccountBalance + diff;
+                }
+                else {
+                    //expendable amount increased
+                    diff = amt - expendableAmtLeft;
+                    expendableAmtLeft = amt;
+
+                    //subtract difference from account balance
+                    currentAccountBalance = currentAccountBalance - diff;
+                }
+                expendableAmtRef.setValue(expendableAmtLeft);
+                accountBalanceRef.setValue(currentAccountBalance);
             }
 
 
