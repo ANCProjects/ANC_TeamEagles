@@ -35,7 +35,7 @@ public class NetworkChecker extends BroadcastReceiver {
 
         if (!isNetworkAvailable() && manager.getUserEmail().equals(Constants.DEFAULT_EMAIL)){
             activity.hideNoConnectivityDialog();
-            activity.showNoConntectivityDialog();
+            activity.showNoConnectivityDialog();
         }
         else
             activity.hideNoConnectivityDialog();

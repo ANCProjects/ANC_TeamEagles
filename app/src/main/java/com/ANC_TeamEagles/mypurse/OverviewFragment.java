@@ -8,6 +8,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,6 +35,7 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
     }
 
@@ -91,6 +93,13 @@ public class OverviewFragment extends Fragment {
         PreferenceManager.getDefaultSharedPreferences(MainActivity.instance)
                 .edit()
                 .putInt(Constants.KEY_FILTER,value).apply();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.tobuy_add).setVisible(false);
+        super.onPrepareOptionsMenu(menu);
+
     }
 
 

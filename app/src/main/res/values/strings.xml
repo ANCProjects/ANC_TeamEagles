@@ -45,6 +45,23 @@
     <string name="condition_buy">when account balance is at least?</string>
     <string name="to_buy">To buy</string>
     <string name="priority">Priority</string>
+    <string name="settings">Settings</string>
+
+    <!--preferece settings values-->
+    <string name="pref_start_balance_title">Start amount</string>
+    <string name="pref_start_balance_summary">Add start amount</string>
+    <string name="pref_key_start_balance">start_bal_key</string>
+
+    <string name="pref_expendable_title">Expendable amount</string>
+    <string name="pref_expendable_summary">Add expendable amount</string>
+    <string name="pref_key_expendable">expendable_key</string>
+
+    <string name="pref_expendable_threshold_title">Low amount threshold</string>
+    <string name="pref_expendable_threshold_summary">At or below this value, App sends alert for
+        low amount</string>
+    <string name="pref_key_expendable_threshold">low_threshold_key</string>
+
+
 
     <string-array name="priority_values">
         <item>1</item>

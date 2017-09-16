@@ -12,6 +12,7 @@
         <item name="android:actionMenuTextColor">@android:color/white</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:actionModeStyle">@style/Widget.AppCompat.ActionMode</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>

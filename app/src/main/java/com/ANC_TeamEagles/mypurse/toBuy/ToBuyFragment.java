@@ -3,13 +3,13 @@ package com.ANC_TeamEagles.mypurse.toBuy;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -27,7 +27,6 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,8 +36,8 @@ public class ToBuyFragment extends Fragment {
     @BindView(R.id.rv_tobuy)
     RecyclerView recyclerView;
 
-    @BindView(R.id.fab_add_to_buy)
-    FloatingActionButton fabAddItem;
+   // @BindView(R.id.fab_add_to_buy)
+    //FloatingActionButton fabAddItem;
 
     public ToBuyFragment() {
         // Required empty public constructor
@@ -47,6 +46,7 @@ public class ToBuyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
     }
 
@@ -64,7 +64,6 @@ public class ToBuyFragment extends Fragment {
         return  view;
     }
 
-    @OnClick(R.id.fab_add_to_buy)
     public void addItem(){
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_to_buy_add,null,
@@ -127,6 +126,15 @@ public class ToBuyFragment extends Fragment {
                 }).show();
     }
 
+    public static void sortItem(){
 
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.tobuy_add).setVisible(true);
+        super.onPrepareOptionsMenu(menu);
+
+    }
 
 }

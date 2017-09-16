@@ -3,9 +3,11 @@ package com.ANC_TeamEagles.mypurse;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -37,6 +39,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ANC_TeamEagles.mypurse.pojo.TransactionItem;
+import com.ANC_TeamEagles.mypurse.settings.SettingsActivity;
+import com.ANC_TeamEagles.mypurse.settings.SettingsFragment;
 import com.ANC_TeamEagles.mypurse.toBuy.ToBuyFragment;
 import com.ANC_TeamEagles.mypurse.utils.Constants;
 import com.ANC_TeamEagles.mypurse.utils.PrefManager;
@@ -63,6 +67,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.ANC_TeamEagles.mypurse.App.accountBalanceRef;
 import static com.ANC_TeamEagles.mypurse.App.expendableAmtRef;
+import static com.ANC_TeamEagles.mypurse.App.lowAmountRef;
 import static com.ANC_TeamEagles.mypurse.App.monthlyTransactionReference;
 import static com.ANC_TeamEagles.mypurse.App.thisMonthExpenseRef;
 import static com.ANC_TeamEagles.mypurse.App.todayExpenseRef;
@@ -70,7 +75,8 @@ import static com.ANC_TeamEagles.mypurse.App.transactionReference;
 import static com.ANC_TeamEagles.mypurse.App.weeklyTransactionRef;
 import static com.ANC_TeamEagles.mypurse.utils.Helpers.formatAmount;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView
+        .OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener{
 
     private ViewPager viewPager;
     private SectionPagerAdapter sectionPagerAdapter;
@@ -80,9 +86,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ValueEventListener todayExpenseListener;
     private ValueEventListener thisMonthExpenseListener;
     private ValueEventListener expendableAmountListener;
+    private ValueEventListener lowAmtListener;
 
-    private static OverviewFragment overviewFragment;
-    private static ChartsFragment chartsFragment;
+    private SharedPreferences preferences;
+
+
+
+    private OverviewFragment overviewFragment;
+    private ChartsFragment chartsFragment;
+    private ToBuyFragment toBuyFragment;
+
 
     public static MainActivity instance;
 
@@ -103,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.expendable_amt)
     TextView expendableAmtTextView;
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.homeStartBal)
     TextView addBal;
@@ -118,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static double previousThisMonthTotal = 0;
     public static double expendableAmtLeft = 0;
     private static double currentAccountBalance = 0;
+    private static double lowAmt = 0;
 
     private View navHeaderView;
     private Calendar calendar = Calendar.getInstance();
@@ -130,7 +144,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.drawerlayout);
         ButterKnife.bind(this);
         instance = this;
-
+        Log.d(TAG," on create");
+        preferences = getSharedPreferences(
+                SettingsFragment.SETTINGS_SHARED_PREFERENCES_FILE_NAME,
+                Context.MODE_PRIVATE);
 
 
         navigationDrawer();
@@ -209,15 +226,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-
-        registerReceiver(networkChecker,filter);
+        preferences.registerOnSharedPreferenceChangeListener(this);
+        Log.d(TAG," on resume");
+        Log.d(TAG,PreferenceManager.getDefaultSharedPreferences(this).getString
+                ("pref_expendable_threshold_title","none"));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(networkChecker);
+        //preferences.unregisterOnSharedPreferenceChangeListener(this);
+        Log.d(TAG," onPause");
     }
+
+
 
     private void setUpFirebaseListeners() {
 
@@ -227,6 +249,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 currentAccountBalance = dataSnapshot.getValue(Double.class) == null ? 0 :
                         dataSnapshot.getValue(Double.class);
                 addBal.setText(formatAmount(currentAccountBalance));
+
+                PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit()
+                        .putLong(Constants.KEY_ACC_BAL_AMT,(long)currentAccountBalance).apply();
 
             }
 
@@ -243,6 +268,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDataChange(DataSnapshot dataSnapshot) {
                 previousTodayTotal = dataSnapshot.getValue(Double.class) == null ? 0
                         : dataSnapshot.getValue(Double.class);
+
+                PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit()
+                        .putLong(Constants.KEY_MONTH_EXPENSE,(long)previousTodayTotal).apply();
             }
 
             @Override
@@ -256,6 +284,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDataChange(DataSnapshot dataSnapshot) {
                 previousThisMonthTotal = dataSnapshot.getValue(Double.class) == null? 0
                         : dataSnapshot.getValue(Double.class);
+                PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit()
+                        .putLong(Constants.KEY_MONTH_EXPENSE,(long)previousThisMonthTotal).apply();
             }
 
             @Override
@@ -264,12 +294,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
+        lowAmtListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                lowAmt = dataSnapshot.getValue(Double.class) == null? 0 :
+                        dataSnapshot.getValue(Double.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
 
         expendableAmountListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 expendableAmtLeft = dataSnapshot.getValue(Double.class) == null ? 0 :
                         dataSnapshot.getValue(Double.class);
+
+                PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit()
+                        .putLong(Constants.KEY_AMOUNT_TO_SPEND,(long)expendableAmtLeft).apply();
+
                 expendableAmtTextView.setText(formatAmount(expendableAmtLeft));
                 addBal.setText(formatAmount(currentAccountBalance));
                 if (expendableAmtLeft == 0 && !isNotificationSent){
@@ -278,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     expendableAmtTextView.setTextColor(getResources().getColor(R.color.low_amount));
 
                 }
-                else if (expendableAmtLeft <= 2000){
+                else if (expendableAmtLeft <= lowAmt){
                     expendableAmtTextView.setTextColor(getResources().getColor(R.color.low_amount));
                     if(!isNotificationSent){
                         showNotification(getString(R.string.notification_low_amt,
@@ -307,6 +353,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(TAG," onStop");
+        unregisterReceiver(networkChecker);
         auth.removeAuthStateListener(authStateListener);
         detachFirebaseListeners();
 
@@ -316,12 +364,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         accountBalanceRef.addValueEventListener(accBalListener);
         todayExpenseRef.addValueEventListener(todayExpenseListener);
         thisMonthExpenseRef.addValueEventListener(thisMonthExpenseListener);
+        lowAmountRef.addValueEventListener(lowAmtListener);
         expendableAmtRef.addValueEventListener(expendableAmountListener);
     }
     public void detachFirebaseListeners(){
         accountBalanceRef.removeEventListener(accBalListener);
         todayExpenseRef.removeEventListener(todayExpenseListener);
         thisMonthExpenseRef.removeEventListener(thisMonthExpenseListener);
+        lowAmountRef.removeEventListener(lowAmtListener);
         expendableAmtRef.removeEventListener(expendableAmountListener);
     }
 
@@ -329,8 +379,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
         auth.addAuthStateListener(authStateListener);
+        registerReceiver(networkChecker,filter);
+        Log.d(TAG," onStart");
+
         if (auth.getCurrentUser() !=null)
             attachFirebaseListeners();
+
 
     }
 
@@ -355,6 +409,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (itemThatWasClickedId == R.id.filter) {
             createFilterDialog();
             return true;
+        }
+
+        else if (itemThatWasClickedId == R.id.tobuy_add)
+        {
+            if (toBuyFragment != null && viewPager.getCurrentItem() == 2)
+                toBuyFragment.addItem();
         }
         return super.onOptionsItemSelected(item);
 
@@ -513,9 +573,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter = new SectionPagerAdapter(getSupportFragmentManager());
         overviewFragment = new OverviewFragment();
         chartsFragment = new ChartsFragment();
+        toBuyFragment = new ToBuyFragment();
+
         adapter.addFragment(overviewFragment);
         adapter.addFragment(chartsFragment);
-        adapter.addFragment(new ToBuyFragment());
+        adapter.addFragment(toBuyFragment);
         viewPager.setAdapter(adapter);
     }
 
@@ -593,7 +655,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_rate){
 
-        } else if (id == R.id.nav_share) {
+        }
+        else if (id == R.id.settings){
+            startActivity(new Intent(this, SettingsActivity.class));
+        }
+        else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_signout) {
             AuthUI.getInstance().signOut(this);
@@ -808,7 +874,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void showNoConntectivityDialog(){
+    public void showNoConnectivityDialog(){
         networkDialog = new AlertDialog.Builder(this)
                 .setMessage("You are offline.")
                 .setPositiveButton("Enable network", new DialogInterface.OnClickListener() {
@@ -830,5 +896,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             networkDialog.dismiss();
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Toast.makeText(this," changed: "+key,Toast.LENGTH_SHORT).show();
+        Log.d(TAG," called pref");
+        final String startBalKey = getString(R.string.pref_key_start_balance);
+        final String expendableKey = getString(R.string.pref_key_expendable);
+        final String expendableThresholdKey = getString(R.string.pref_key_expendable_threshold);
+
+        if (key.equalsIgnoreCase(startBalKey)){
+            double amt = 0;
+            try{
+                amt = Double.valueOf(sharedPreferences.getString(key,"0"));
+            }
+            catch (NumberFormatException e){
+                Log.d(TAG," not a number");
+            }
+            finally {
+                accountBalanceRef.setValue(amt);
+            }
+
+
+        }
+        else if (key.equals(expendableKey)){
+            double amt = 0;
+            try{
+                amt = Double.valueOf(sharedPreferences.getString(key,"0"));
+            }
+            catch (NumberFormatException e){
+                Log.d(TAG," not a number");
+            }
+            finally {
+                expendableAmtRef.setValue(amt);
+            }
+
+
+        }
+        else if (key.equals(expendableThresholdKey)){
+            double amt = 0;
+            try{
+                amt = Double.valueOf(sharedPreferences.getString(key,"0"));
+            }
+            catch (NumberFormatException e){
+                Log.d(TAG," not a number");
+            }
+            finally {
+                lowAmountRef.setValue(amt);
+            }
+
+        }
+    }
 
 }

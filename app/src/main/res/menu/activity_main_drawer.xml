@@ -20,6 +20,12 @@
 
 
     <group android:id="@+id/system" android:checkableBehavior="single">
+
+        <item android:id="@+id/settings"
+              android:title="@string/settings"
+              android:icon="@drawable/ic_settings_black_24dp"
+              />
+
             <item android:id="@+id/nav_about"
                   android:title="@string/about_us"
                   android:icon="@drawable/ic_person_black_24dp" />

@@ -20,10 +20,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+
+        <activity android:name=".MainActivity"
+                  android:launchMode="singleTop"
+        />
+
+        <activity android:name=".settings.SettingsActivity"
+                  android:launchMode="singleTop"
+                  android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".MainActivity" />
+        </activity>
 
         <receiver android:name=".NetworkChecker"
                   android:exported="false" />
+
+        <receiver android:name=".BankSmsReceiver"
+                  android:enabled="true"
+                  android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".SmsProcessingService"
+                 android:exported="true"
+                 android:enabled="true"/>
     </application>
 
 </manifest>

@@ -24,6 +24,7 @@ public class App extends Application {
     public static DatabaseReference thisMonthExpenseRef;
     public static DatabaseReference transactionReference;
     public static DatabaseReference toBuyRef;
+    public static DatabaseReference lowAmountRef;
 
     public static DatabaseReference expendableAmtRef;
 
@@ -53,7 +54,7 @@ public class App extends Application {
         todayExpenseRef = userRef.child(Constants.NODE_EXPENDITURE_TODAY);
         thisMonthExpenseRef = userRef.child(Constants.NODE_EXPENDITURE_THIS_MONTH);
         expendableAmtRef = userRef.child(Constants.NODE_EXPENDABLE);
-
+        lowAmountRef = userRef.child(Constants.NODE_LOW_AMT);
         toBuyRef = userRef.child(Constants.NODE_TO_BUY);
     }
 

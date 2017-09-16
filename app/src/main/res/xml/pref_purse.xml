@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<EditTextPreference
+        android:title="@string/pref_start_balance_title"
+        android:summary="@string/pref_start_balance_summary"
+        android:defaultValue="0"
+        android:key="@string/pref_key_start_balance" />
+
+    <EditTextPreference
+            android:title="@string/pref_expendable_title"
+            android:summary="@string/pref_expendable_summary"
+            android:defaultValue="0"
+            android:key="@string/pref_key_expendable"
+            />
+
+    <EditTextPreference
+            android:title="@string/pref_expendable_threshold_title"
+            android:defaultValue="0"
+            android:summary="@string/pref_expendable_threshold_summary"
+            android:key="@string/pref_key_expendable_threshold"
+    />
+
+</PreferenceScreen>

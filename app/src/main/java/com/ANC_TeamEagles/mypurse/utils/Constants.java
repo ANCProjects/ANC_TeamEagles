@@ -19,6 +19,7 @@ public class Constants {
     public static final String QUERY_INCOME = "isIncome";
     public static final String NODE_EXPENDABLE = "expendable amount";
     public static final String NODE_TO_BUY = "scale of preference";
+    public static final String NODE_LOW_AMT ="warn when amount is below";
 
     public static final String TODAY = "todaydate";
 
@@ -30,6 +31,12 @@ public class Constants {
     public static final String FRAG_OVERVIEW = "overview";
     public static final String FRAG_CHART = "charts";
     public static final String FRAG_TO_BUY = "toBuy";
+
+    public static final String KEY_ACC_BAL_AMT = "amount in acc";
+    public static final String KEY_AMOUNT_TO_SPEND = "expendable amount";
+    public static final String KEY_MONTH_EXPENSE = "monthly spend";
+    public static final String KEY_TODAY_EXPENSE ="today spend";
+
 
 
 
