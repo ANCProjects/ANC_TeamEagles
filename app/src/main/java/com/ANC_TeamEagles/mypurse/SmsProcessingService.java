@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.ANC_TeamEagles.mypurse.pojo.TransactionItem;
 import com.ANC_TeamEagles.mypurse.utils.Constants;
@@ -41,7 +42,7 @@ public class SmsProcessingService extends IntentService {
 
     public static void startSmsProcessingIntent(String msgBody, Context context){
 
-        Intent processIntent = new Intent();
+        Intent processIntent = new Intent(context,SmsProcessingService.class);
         processIntent.putExtra(EXTRA_MSG_BODY,msgBody);
         context.startService(processIntent);
 
@@ -89,49 +90,54 @@ public class SmsProcessingService extends IntentService {
 
     public void saveToFirebase(String amount, boolean isIncome) {
 
-        Double transacAmt = Double.valueOf(amount);
-        double previousThisMonthTotal = PreferenceManager.getDefaultSharedPreferences(this).getLong(Constants
-                .KEY_MONTH_EXPENSE, 0);
-        double previousTodayTotal = PreferenceManager.getDefaultSharedPreferences(this).
-                getLong(Constants.KEY_TODAY_EXPENSE, 0);
-        double expendableAmt = PreferenceManager.getDefaultSharedPreferences(this)
-                .getLong(Constants.KEY_AMOUNT_TO_SPEND, 0);
+        try{
+            Double transacAmt = Double.valueOf(amount);
+            double previousThisMonthTotal = PreferenceManager.getDefaultSharedPreferences(this).getLong(Constants
+                    .KEY_MONTH_EXPENSE, 0);
+            double previousTodayTotal = PreferenceManager.getDefaultSharedPreferences(this).
+                    getLong(Constants.KEY_TODAY_EXPENSE, 0);
+            double expendableAmt = PreferenceManager.getDefaultSharedPreferences(this)
+                    .getLong(Constants.KEY_AMOUNT_TO_SPEND, 0);
 
-        double currentAccountBalance = PreferenceManager.getDefaultSharedPreferences(this)
-                .getLong(Constants.KEY_ACC_BAL_AMT, 0);
+            double currentAccountBalance = PreferenceManager.getDefaultSharedPreferences(this)
+                    .getLong(Constants.KEY_ACC_BAL_AMT, 0);
 
-        Calendar calendar = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
 
-        long now = System.currentTimeMillis();
-        calendar.setTimeInMillis(now);
-        String day = calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale
-                .ENGLISH);
-        String month = calendar.getDisplayName(Calendar.MONTH,Calendar.LONG, Locale
-                .ENGLISH);
+            long now = System.currentTimeMillis();
+            calendar.setTimeInMillis(now);
+            String day = calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale
+                    .ENGLISH);
+            String month = calendar.getDisplayName(Calendar.MONTH,Calendar.LONG, Locale
+                    .ENGLISH);
 
-        if (isIncome) {
-            currentAccountBalance += transacAmt;
-        } else {
-            currentAccountBalance -= transacAmt;
-            weeklyTransactionRef.child(day).setValue(previousTodayTotal + transacAmt);
-            monthlyTransactionReference.child(month).setValue(previousThisMonthTotal +
-                    transacAmt);
-            todayExpenseRef.setValue(previousTodayTotal + transacAmt);
-            thisMonthExpenseRef.setValue(previousThisMonthTotal + transacAmt);
-            expendableAmt -= transacAmt;
-            expendableAmtRef.setValue(expendableAmt);
+            if (isIncome) {
+                currentAccountBalance += transacAmt;
+            } else {
+                currentAccountBalance -= transacAmt;
+                weeklyTransactionRef.child(day).setValue(previousTodayTotal + transacAmt);
+                monthlyTransactionReference.child(month).setValue(previousThisMonthTotal +
+                        transacAmt);
+                todayExpenseRef.setValue(previousTodayTotal + transacAmt);
+                thisMonthExpenseRef.setValue(previousThisMonthTotal + transacAmt);
+                expendableAmt -= transacAmt;
+                expendableAmtRef.setValue(expendableAmt);
+            }
+
+            TransactionItem item = new TransactionItem(transacAmt,"bank transaction",day+"_"+month,
+                    currentAccountBalance,isIncome,now);
+
+            accountBalanceRef.setValue(currentAccountBalance);
+            String key = transactionReference.push().getKey();
+
+            HashMap<String, Object> map= new HashMap<>();
+            map.put("/"+key, item);
+            transactionReference.updateChildren(map);
         }
 
-        TransactionItem item = new TransactionItem(transacAmt,"bank transaction",day+"_"+month,
-                currentAccountBalance,isIncome,now);
-
-        accountBalanceRef.setValue(currentAccountBalance);
-        String key = transactionReference.push().getKey();
-
-        HashMap<String, Object> map= new HashMap<>();
-        map.put("/"+key, item);
-        transactionReference.updateChildren(map);
-
+        catch(NumberFormatException e){
+            Log.d(MainActivity.TAG,amount+" is not a number");
+        }
     }
 
 }

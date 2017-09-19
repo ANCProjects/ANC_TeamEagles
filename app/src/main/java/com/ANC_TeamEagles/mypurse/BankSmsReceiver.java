@@ -23,7 +23,8 @@ public class BankSmsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        Log.e("Sender"," message received");
+        showToast(context,"message received! ");
         if (intent.getAction().equals(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)){
 
             String sender = "";
@@ -32,6 +33,7 @@ public class BankSmsReceiver extends BroadcastReceiver {
             for (SmsMessage message: Telephony.Sms.Intents.getMessagesFromIntent(intent)){
                 sender = message.getDisplayOriginatingAddress().toLowerCase();
                 Log.e("Sender",sender);
+                showToast(context,"sender: "+sender);
                 if (sender.contains(QUERY_STRING))
                 {
                     body = message.getMessageBody();
@@ -44,4 +46,9 @@ public class BankSmsReceiver extends BroadcastReceiver {
             }
         }
     }
+
+    public void showToast(Context context, String msg){
+        Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
+    }
+
 }

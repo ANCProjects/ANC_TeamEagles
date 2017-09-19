@@ -1,10 +1,15 @@
 package com.ANC_TeamEagles.mypurse.authentication;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ANC_TeamEagles.mypurse.MainActivity;
-import com.ANC_TeamEagles.mypurse.utils.PrefManager;
 import com.ANC_TeamEagles.mypurse.R;
+import com.ANC_TeamEagles.mypurse.utils.PrefManager;
 
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -32,6 +37,8 @@ public class WelcomeActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
+
+    private static final int REQ_SMS =213;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +104,19 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            askSmsPermission();
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void askSmsPermission() {
+        if (checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
+                || checkSelfPermission(Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS,
+                    Manifest.permission.READ_SMS},REQ_SMS);
+        }
     }
 
     private void addBottomDots(int currentPage) {
@@ -167,6 +187,26 @@ public class WelcomeActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQ_SMS){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Snackbar.make(getWindow().getDecorView().getRootView(),"Sms permission granted",Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+
+            else {
+                Snackbar.make(getWindow().getDecorView().getRootView(),"Sms permission denied",
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }
+
+
     }
 
     /**

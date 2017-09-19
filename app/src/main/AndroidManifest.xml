@@ -3,6 +3,8 @@
     package="com.ANC_TeamEagles.mypurse">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
 
     <application
         android:name=".App"
