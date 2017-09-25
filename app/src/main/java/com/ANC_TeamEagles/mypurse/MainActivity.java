@@ -902,7 +902,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Toast.makeText(this," changed: "+key,Toast.LENGTH_SHORT).show();
+
         Log.d(TAG," called pref");
         final String startBalKey = getString(R.string.pref_key_start_balance);
         final String expendableKey = getString(R.string.pref_key_expendable);

@@ -66,21 +66,21 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         String keyThreshold = getActivity().getString(R.string.pref_key_expendable_threshold);
 
         try {
-             accBal = Double.parseDouble(sharedPreferences.getString(keyAccBal,"0"));
+             accBal = Double.parseDouble(sharedPreferences.getString(keyAccBal,"0,0"));
         }
         catch (NumberFormatException e){
             accBal = sharedPreferences.getLong(Constants.KEY_ACC_BAL_AMT,0);
         }
 
         try {
-            expendableAmt = Double.parseDouble(sharedPreferences.getString(keyExpendable,"0"));
+            expendableAmt = Double.parseDouble(sharedPreferences.getString(keyExpendable,"0,0"));
         }
         catch (NumberFormatException e){
             expendableAmt = sharedPreferences.getLong(Constants.KEY_AMOUNT_TO_SPEND,0);
         }
 
         try {
-            thresholdAmt = Double.parseDouble(sharedPreferences.getString(keyThreshold,"0"));
+            thresholdAmt = Double.parseDouble(sharedPreferences.getString(keyThreshold,"0,0"));
         }
         catch (NumberFormatException e){
             thresholdAmt = sharedPreferences.getLong(Constants.KEY_THRESHOLD_AMT,0);
@@ -166,5 +166,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 sharedPreferences.edit().putString(key,""+thresholdAmt).apply();
             }
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 }

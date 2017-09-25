@@ -25,24 +25,22 @@ public class BankSmsReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.e("Sender"," message received");
         showToast(context,"message received! ");
-        if (intent.getAction().equals(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)){
 
-            String sender = "";
-            String body ="";
+        String sender = "";
+        String body ="";
 
-            for (SmsMessage message: Telephony.Sms.Intents.getMessagesFromIntent(intent)){
-                sender = message.getDisplayOriginatingAddress().toLowerCase();
-                Log.e("Sender",sender);
-                showToast(context,"sender: "+sender);
-                if (sender.contains(QUERY_STRING))
-                {
-                    body = message.getMessageBody();
-                    Log.e("Sender",body);
-                    Toast.makeText(context,body,Toast.LENGTH_LONG).show();
+        for (SmsMessage message: Telephony.Sms.Intents.getMessagesFromIntent(intent)){
+            sender = message.getDisplayOriginatingAddress().toLowerCase();
+            Log.e("Sender",sender);
+            showToast(context,"sender: "+sender);
+            if (sender.contains(QUERY_STRING))
+            {
+                body = message.getMessageBody();
+                Log.e("Sender",body);
+                Toast.makeText(context,body,Toast.LENGTH_LONG).show();
 
-                    SmsProcessingService.startSmsProcessingIntent(body, context);
+                SmsProcessingService.startSmsProcessingIntent(body, context);
 
-                }
             }
         }
     }
